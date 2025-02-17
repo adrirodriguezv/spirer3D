@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router';
 import Preloader from './components/Preloader.vue';
 import Navegador from './components/Navegador.vue';
 import Footer from './components/FooterSection.vue';
+import FooterSection from './components/FooterSection.vue';
 
 const isLoading = ref(true);
 
@@ -18,9 +19,8 @@ onMounted(() => {
   <div>
     <Preloader v-if="isLoading" />
     <div v-else>
-      <Navegador/>
       <RouterView/>
-      <Footer/>
+      <FooterSection/>
     </div>
   </div>
 </template>

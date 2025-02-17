@@ -1,7 +1,8 @@
 <script setup>
-import Article from '@/components/ArticleSection.vue';
+import Article from '@/components/Products.vue';
 import Cta from '@/components/Cta.vue'
 import ImageArticle from '@/components/ImageArticle.vue';
+import Navegador from '@/components/Navegador.vue';
 import SpecialSection from '@/components/SpecialSection.vue';
 import Video from '@/components/VideoBanner.vue';
 </script>
@@ -9,6 +10,7 @@ import Video from '@/components/VideoBanner.vue';
 <template>
   <body>
     <main>
+      <Navegador/>
       <Video></Video>
       <SpecialSection></SpecialSection>
       <Cta></Cta>

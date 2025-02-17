@@ -1,73 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import FormPersonalizar from '@/components/FormPersonalizar.vue';
+import NavegadorDark from '@/components/NavegadorDark.vue';
 
-// Variables reactivas para los datos del formulario
-const objectName = ref('');
-const dimensions = ref('');
-const material = ref('');
-const color = ref('');
-const file = ref(null);
-const comments = ref('');
-
-// Manejo del archivo seleccionado
-const handleFileUpload = (event) => {
-  file.value = event.target.files[0];
-};
-
-// Función para enviar el pedido
-const sendOrder = async () => {
-  const formData = new FormData();
-  formData.append('objectName', objectName.value);
-  formData.append('dimensions', dimensions.value);
-  formData.append('material', material.value);
-  formData.append('color', color.value);
-  formData.append('file', file.value);
-  formData.append('comments', comments.value);
-
-  try {
-    const response = await fetch('http://localhost:3000/send-email', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const result = await response.json();
-    alert(result.message);
-  } catch (error) {
-    console.error('Error al enviar el pedido:', error);
-  }
-};
 </script>
 
 <template>
-  <section>
-    <h2>Personaliza tu pedido</h2>
-    <form @submit.prevent="sendOrder">
-      <label>Nombre del objeto</label>
-      <input type="text" v-model="objectName" placeholder="Nombre del objeto" required />
-
-      <label>Dimensiones (cm)</label>
-      <input type="text" v-model="dimensions" placeholder="Ej: 10x10x10" required />
-
-      <label>Material</label>
-      <select v-model="material" required>
-        <option value="" disabled selected>Selecciona un material</option>
-        <option value="PLA">PLA</option>
-        <option value="PETG">PETG</option>
-        <option value="TPU">TPU (Flexible)</option>
-      </select>
-
-      <label>Color</label>
-      <input type="text" v-model="color" placeholder="Ej: Rojo, Negro, Azul" />
-
-      <label>Sube tu archivo 3D (.stl, .obj)</label>
-      <input type="file" @change="handleFileUpload" accept=".stl, .obj" required />
-
-      <label>Comentarios adicionales</label>
-      <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
-
-      <button type="submit">Enviar pedido</button>
-    </form>
-  </section>
+  <NavegadorDark/>
+  <FormPersonalizar/>
 </template>
 
 <style scoped>

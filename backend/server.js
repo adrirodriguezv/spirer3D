@@ -26,7 +26,7 @@ const transporter = nodemailer.createTransport({
 
 // Ruta para enviar el correo
 app.post('/send-email', upload.single('file'), async (req, res) => {
-  const { objectName, dimensions, material, color, comments } = req.body;
+  const { objectName, altura, anchura, profundidad, material, color, comments } = req.body;
   const file = req.file;
 
   try {
@@ -35,13 +35,15 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
       to: 'adriR@gmail.com', // Cambia esto por tu email
       subject: `Nuevo Pedido - ${objectName}`,
       text: `
-        📦 **Nuevo Pedido de Impresión 3D**
+        📦 Nuevo Pedido de Spirer 3D
         
-        📌 **Nombre del objeto:** ${objectName}
-        📏 **Dimensiones:** ${dimensions}
-        🛠 **Material:** ${material}
-        🎨 **Color:** ${color}
-        📝 **Comentarios:** ${comments}
+        📌 **Nombre del objeto: ${objectName}
+        📏 **Altura: ${altura}
+        📏 **Anchura: ${anchura}
+        📏 **Profundidad: ${profundidad}
+        🛠 **Material: ${material}
+        🎨 **Color: ${color}
+        📝 **Comentarios: ${comments}
       `,
       attachments: file
         ? [

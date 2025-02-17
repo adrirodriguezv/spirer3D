@@ -20,11 +20,12 @@ onMounted(() => {
   <header>
     <nav :class="{ 'scrolled': isScrolled }" id="nav">
       <ul>
-        <div><RouterLink :to="`/`"><img src="/Logo3D.png"></RouterLink></div>
-        <li><RouterLink :to="`/`">Inicio</RouterLink></li>
-        <li><RouterLink :to="`/impresiones`">Impresiones</RouterLink></li>
-        <li><RouterLink :to="`/precio`">Precios</RouterLink></li>
-        <li><RouterLink :to="`/personalizar`">Personalizar</RouterLink></li>
+        <div><RouterLink :class="{'scrolled': isScrolled}" :to="`/`"><img src="/Logo3D.png"></RouterLink></div>
+        <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/`">Inicio</RouterLink></li>
+        <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/productos`">Productos</RouterLink></li>
+        <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/precio`">Precios</RouterLink></li>
+        <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/personalizar`">Personalizar</RouterLink></li>
+        <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/contacto`">Contacto</RouterLink></li>
       </ul>
     </nav>
   </header>
@@ -50,26 +51,25 @@ nav {
   top: 0;
   left: 50%;
   transform: translateX(-50%); /* Centra el nav horizontalmente */
-  width: 60%; /* Ajusta el ancho según el contenido */
+  width: 100%; /* Ajusta el ancho según el contenido */
   z-index: 1000;
   background: transparent; /* Fondo transparente por defecto */
-  color: white;
   transition: background-color 0.3s ease, border-radius 0.3s ease; /* Transición suave */
-  border-radius: 40px 40px; /* Bordes redondeados */
-  margin-top: 2%;
+  padding: 2%;
 }
 
 nav.scrolled {
-  background: rgb(61, 61, 61, 0.7); /* Fondo oscuro con opacidad */
-  border-radius: 40px 40px; /* Bordes redondeados */
+  background: #efefef; /* Fondo oscuro con opacidad */
+  border-bottom: 1px #5454541a solid;
 }
 
 ul {
   display: flex;
   justify-content: space-around;
-  width: 100%; /* Hace que los elementos se distribuyan uniformemente */
+  width: 50%; /* Hace que los elementos se distribuyan uniformemente */
   list-style: none;
-  padding: 0;
+  padding: 2px 0;
+  margin-left: 10%;
   
 }
 
@@ -85,6 +85,10 @@ a {
   color: white;
   padding: 10px 15px; /* Añadir padding a los enlaces */
   transition: color 0.3s ease; /* Transición suave al hacer hover */
+}
+
+a.scrolled {
+  color: #545454;
 }
 
 li:hover {

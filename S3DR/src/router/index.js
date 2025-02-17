@@ -10,14 +10,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/contact',
-      name: 'contact',
+      path: '/contacto',
+      name: 'contacto',
       component: () => import('../views/Contact.vue'),
     },
     {
-      path: '/impresiones',
-      name: 'impresiones',
-      component: () => import('../views/Impresiones.vue'),
+      path: '/productos',
+      name: 'productos',
+      component: () => import('../views/Productos.vue'),
     },
     {
       path: '/personalizar',
