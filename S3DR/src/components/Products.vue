@@ -161,19 +161,20 @@ img {
 
 .product-info {
     margin-top: 1rem;
-    text-align: center;
+    text-align: left;
     margin-bottom: 3.5rem;
 }
 
 .product-info p {
     margin-top: 0.5rem;
-    color: var(--btn-hover);
 }
 
 h2 {
     text-align: left;
     margin-left: 10%;
+    margin-right: 8%;
     margin-bottom: -15%;
+    border-bottom: 1px #5454546b solid ;
 }
 
 @media (max-width: 800px) {

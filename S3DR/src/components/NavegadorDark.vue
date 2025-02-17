@@ -26,7 +26,11 @@ onMounted(() => {
         <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/precio`">Precios</RouterLink></li>
         <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/personalizar`">Personalizar</RouterLink></li>
         <li><RouterLink :class="{'scrolled': isScrolled}" :to="`/contacto`">Contacto</RouterLink></li>
+            
       </ul>
+      <ul><div class="cliente">
+          <li><img src="../assets/img/perfil.png"></li>
+        </div>  </ul>
     </nav>
   </header>
 </template>
@@ -46,6 +50,7 @@ img {
 }
 
 nav {
+  display: flex;
   text-transform: none;
   position: fixed;
   top: 0;
@@ -55,7 +60,7 @@ nav {
   z-index: 1000;
   background: transparent; /* Fondo transparente por defecto */
   transition: background-color 0.3s ease, border-radius 0.3s ease; /* Transición suave */
-  padding: 2%;
+  padding: 1.5%;
 }
 
 nav.scrolled {
@@ -83,14 +88,19 @@ li {
 a {
   text-decoration: none;
   color: #545454;
-  padding: 10px 15px; /* Añadir padding a los enlaces */
   transition: color 0.3s ease; /* Transición suave al hacer hover */
 }
 
 li:hover {
   transform: scale(1.1);
 }
+.cliente{
+  display: flex;
 
+}
+.cliente img{
+  width: 30px;
+}
 @media (max-width: 800px) {
   nav {
     width: 90%;

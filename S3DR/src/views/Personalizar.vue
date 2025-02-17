@@ -11,7 +11,7 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
 
 <style scoped>
 section {
-    margin-top: 15%;
+    margin-top: 10%;
     margin-bottom: 15%;
 }
 

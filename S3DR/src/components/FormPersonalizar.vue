@@ -45,14 +45,14 @@ const sendOrder = async () => {
       <label>Nombre del objeto</label>
       <input type="text" v-model="objectName" required />
 
-      <label>Altura (cm)</label>
-      <input type="number" v-model="altura" required />
+      <label>Altura</label>
+      <input type="number" v-model="altura" placeholder="Cm" required />
       
-      <label>Anchura (cm)</label>
-      <input type="number" v-model="anchura" required />
+      <label>Anchura</label>
+      <input type="number" v-model="anchura" placeholder="Cm" required />
       
-      <label>Profundidad (cm)</label>
-      <input type="number" v-model="profundidad" required />
+      <label>Profundidad</label>
+      <input type="number" v-model="profundidad" placeholder="Cm" required />
 
       <label>Material</label>
       <select v-model="material" required>
@@ -78,13 +78,15 @@ const sendOrder = async () => {
 
 <style scoped>
 section {
-    margin-top: 15%;
+    margin-top: 10%;
     margin-bottom: 15%;
 }
 
-h2{
-    text-align: center;
-    margin-bottom: 2.5%;
+h2 {
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 8%;
+    border-bottom: 1px #5454546b solid ;
 }
 
 /* Estilos generales */
@@ -99,12 +101,14 @@ form {
     font-family: Arial, sans-serif;
     border: 2px white solid;
     background-color: rgba(255, 255, 255, 0.329);
+    margin-top: 5%;
 }
 
 /* Estilo para etiquetas */
 label {
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 550;
+    font-style: italic;
 }
 
 /* Estilo para inputs y select */
@@ -140,7 +144,7 @@ textarea {
 button {
   padding: 12px 20px;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: #5454546b;
   color: white;
   border: none;
   border-radius: 5px;
@@ -149,10 +153,16 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #545454bd;
 }
 
 button:active {
     background-color: #388e3c;
+}
+
+textarea::placeholder, input::placeholder{
+    font-weight: 300;
+    font-style: italic;
+    font-size: 85%;
 }
 </style>

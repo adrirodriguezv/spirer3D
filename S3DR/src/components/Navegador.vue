@@ -55,7 +55,7 @@ nav {
   z-index: 1000;
   background: transparent; /* Fondo transparente por defecto */
   transition: background-color 0.3s ease, border-radius 0.3s ease; /* Transición suave */
-  padding: 2%;
+  padding: 1.5%;
 }
 
 nav.scrolled {
@@ -83,7 +83,6 @@ li {
 a {
   text-decoration: none;
   color: white;
-  padding: 10px 15px; /* Añadir padding a los enlaces */
   transition: color 0.3s ease; /* Transición suave al hacer hover */
 }
 

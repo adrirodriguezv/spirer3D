@@ -45,17 +45,16 @@ const totalCost = computed(() => {
 
 <template>
   <section>
-    <h2>Calculadora de Precio 3D</h2>
-
+    <h2>Calculadora de precio</h2>
     <form>
-      <label>Ancho (cm)</label>
-      <input type="number" v-model.number="width" min="0" placeholder="Ej: 10" required>
+      <label>Ancho</label>
+      <input type="number" v-model.number="width" min="0" placeholder="Cm" required>
 
-      <label>Alto (cm)</label>
-      <input type="number" v-model.number="height" min="0" placeholder="Ej: 10" required>
+      <label>Alto</label>
+      <input type="number" v-model.number="height" min="0" placeholder="Cm" required>
 
-      <label>Profundidad (cm)</label>
-      <input type="number" v-model.number="depth" min="0" placeholder="Ej: 10" required>
+      <label>Profundidad</label>
+      <input type="number" v-model.number="depth" min="0" placeholder="Cm" required>
 
       <label>Material</label>
       <select v-model="selectedMaterial" required>
@@ -80,13 +79,15 @@ const totalCost = computed(() => {
 
 <style scoped>
 section {
-  margin-top: 15%;
+  margin-top: 10%;
   margin-bottom: 15%;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 2.5%;
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 8%;
+    border-bottom: 1px #5454546b solid ;
 }
 
 /* Estilos generales */
@@ -101,12 +102,14 @@ form {
   font-family: Arial, sans-serif;
   border: 2px white solid;
   background-color: rgba(255, 255, 255, 0.329);
+  margin-top: 5%;
 }
 
 /* Estilo para etiquetas */
 label {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 550;
+  font-style: italic;
 }
 
 /* Estilo para inputs y select */
@@ -141,5 +144,11 @@ select:focus {
   font-weight: bold;
   color: #4CAF50;
   border: 2px solid #4CAF50;
+}
+
+textarea::placeholder, input::placeholder{
+    font-weight: 300;
+    font-style: italic;
+    font-size: 85%;
 }
 </style>
