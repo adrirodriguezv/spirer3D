@@ -11,7 +11,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Configurar multer para manejar archivos
+
 const upload = multer({ dest: 'uploads/' });
 
 // Configurar transporte de Nodemailer (Usando Gmail como ejemplo)
@@ -32,7 +32,7 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   try {
     const mailOptions = {
       from: 'noreply@s3dr.com',
-      to: 'adri@gmail.com', // Cambia esto por tu email
+      to: 'adriR@gmail.com', // Cambia esto por tu email
       subject: `Nuevo Pedido - ${objectName}`,
       text: `
         📦 **Nuevo Pedido de Impresión 3D**
