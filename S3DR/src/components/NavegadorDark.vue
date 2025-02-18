@@ -38,12 +38,11 @@ onMounted(() => {
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
         </li>
-
       </ul>
-      <ul>
+      <ul class="cliente-container">
         <div class="cliente">
-          <li><img src="../assets/img/perfil.png"></li>
-          <li><img src="../assets/img/cesta.png"></li>
+          <img src="../assets/img/perfil.png" class="perfil-img">
+          <img src="../assets/img/cesta.png" class="cesta-img">
         </div>
       </ul>
     </nav>
@@ -67,44 +66,43 @@ img {
 
 nav {
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
   text-transform: none;
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  /* Centra el nav horizontalmente */
   width: 100%;
-  /* Ajusta el ancho según el contenido */
   z-index: 1000;
   background: transparent;
-  /* Fondo transparente por defecto */
   transition: background-color 0.3s ease, border-radius 0.3s ease;
-  /* Transición suave */
-  padding: 1.5%;
+  padding: 0.5%;
 }
 
 nav.scrolled {
   background: #efefef;
   /* Fondo oscuro con opacidad */
-
 }
 
 ul {
   display: flex;
-  justify-content: space-around;
-  width: 50%;
-  /* Hace que los elementos se distribuyan uniformemente */
+  justify-content: flex-start;
+  /* Centra los elementos */
+  align-items: center;
+  /* Alinea los elementos verticalmente */
+  width: 100%;
+  /* Asegura que ocupe el ancho completo */
   list-style: none;
   padding: 2px 0;
-  margin-left: 10%;
-
+  gap: 20px;
+  /* Espaciado entre elementos */
+  margin-left: 15%;
 }
 
 li {
   font-weight: 500;
-  margin-top: 3%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
 }
 
 a {
@@ -120,11 +118,24 @@ li:hover {
 
 .cliente {
   display: flex;
-
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.cliente img {
-  width: 30px;
+.cliente-container{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 5%;
+}
+
+.perfil-img {
+  width: 36px;
+}
+
+.cesta-img {
+  width: 25px;
+
 }
 
 @media (max-width: 800px) {

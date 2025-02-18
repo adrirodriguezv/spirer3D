@@ -41,7 +41,7 @@
     <div class="legals">
       <p>&copy; SpireR 2025</p>
       <p>|</p>
-      <RouterLink :to="`/contact`">
+      <RouterLink :to="`/contacto`">
         <p>Contacto</p>
       </RouterLink>
       <p>Aviso legal</p>

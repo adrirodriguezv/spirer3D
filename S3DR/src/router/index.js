@@ -29,6 +29,11 @@ const router = createRouter({
       name: 'precio',
       component: () => import('../views/Precio.vue'),
     },
+    {
+      path: '/confirmarPedido',
+      name: 'confirmarPedido',
+      component: () => import('../views/ConfirmarPedido.vue'),
+    },
   ],
 });
 

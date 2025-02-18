@@ -1,56 +1,61 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useFormStore } from '../store/store'; // Importar el store de Pinia
 
-// Variables reactivas para los datos del formulario
+// Variables del formulario
 const objectName = ref('');
-const dimensions = ref('');
+const altura = ref('');
+const anchura = ref('');
+const profundidad = ref('');
 const material = ref('');
 const color = ref('');
-const file = ref(null);
 const comments = ref('');
 
-// Manejo del archivo seleccionado
-const handleFileUpload = (event) => {
-  file.value = event.target.files[0];
-};
+// Crear una instancia del store
+const router = useRouter();  // Instancia del router
+const store = useFormStore();
 
-// Función para enviar el pedido
-const sendOrder = async () => {
-  const formData = new FormData();
-  formData.append('objectName', objectName.value);
-  formData.append('dimensions', dimensions.value);
-  formData.append('material', material.value);
-  formData.append('color', color.value);
-  formData.append('file', file.value);
-  formData.append('comments', comments.value);
 
-  try {
-    const response = await fetch('http://localhost:3000/send-email', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const result = await response.json();
-    alert(result.message);
-  } catch (error) {
-    console.error('Error al enviar el pedido:', error);
+// Función para enviar el pedido y almacenar los datos en el store
+const sendOrder = () => {
+  // Validar que todos los campos estén completos
+  if (!objectName.value || !altura.value || !anchura.value || !profundidad.value || !material.value || !color.value) {
+    alert('Por favor, completa todos los campos');
+    return;
   }
+
+  // Guardar los datos en el store
+  store.setFormData({
+    objectName: objectName.value,
+    altura: altura.value,
+    anchura: anchura.value,
+    profundidad: profundidad.value,
+    material: material.value,
+    color: color.value,
+    comments: comments.value,
+  });
+
+  // Redirigir a la página de confirmación
+  
+  router.push('/confirmarPedido');
 };
 </script>
 
 <template>
-  <section>
-    <h2>Personaliza tu pedido</h2>
+  <section class="container">
+    <h2>Datos del Pedido</h2>
     <form @submit.prevent="sendOrder">
+    
       <label>Nombre del objeto</label>
       <input type="text" v-model="objectName" required />
 
       <label>Altura</label>
       <input type="number" v-model="altura" placeholder="Cm" required />
-      
+
       <label>Anchura</label>
       <input type="number" v-model="anchura" placeholder="Cm" required />
-      
+
       <label>Profundidad</label>
       <input type="number" v-model="profundidad" placeholder="Cm" required />
 
@@ -63,15 +68,21 @@ const sendOrder = async () => {
       </select>
 
       <label>Color</label>
-      <input type="text" v-model="color" required />
-
-      <label>Sube tu archivo 3D (.jpg, .jpeg)</label>
-      <input type="file" @change="handleFileUpload" accept=".jpg, .jpeg" required />
+      <select v-model="color" required>
+        <option value="" disabled selected>Selecciona un color</option>
+        <option value="Negro">Negro</option>
+        <option value="Rojo">Rojo</option>
+        <option value="Dorado">Dorado</option>
+        <option value="Blanco">Blanco</option>
+        <option value="Amarillo">Amarillo</option>
+        <option value="Marron">Marron</option>
+      </select>
 
       <label>Comentarios adicionales</label>
       <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
 
-      <button type="submit">Enviar pedido</button>
+      <!-- Botón para enviar el pedido -->
+      <button type="submit">Confirmar Pedido</button>
     </form>
   </section>
 </template>
@@ -99,7 +110,7 @@ form {
     flex-direction: column;
     gap: 20px;
     font-family: Arial, sans-serif;
-    border: 2px white solid;
+    border: 3px white solid;
     background-color: rgba(255, 255, 255, 0.329);
     margin-top: 5%;
 }
@@ -117,7 +128,7 @@ textarea {
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 5px;
     background: transparent;
     outline: none;
@@ -141,6 +152,7 @@ textarea {
 
 /* Estilo del botón */
 button {
+  width: 100%;
   padding: 12px 20px;
   font-size: 1rem;
   background-color: #5454546b;
@@ -153,10 +165,6 @@ button {
 
 button:hover {
     background-color: #545454bd;
-}
-
-button:active {
-    background-color: #388e3c;
 }
 
 textarea::placeholder, input::placeholder{

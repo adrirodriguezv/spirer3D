@@ -1,5 +1,4 @@
 <script setup>
-import Article from '@/components/Products.vue';
 import Cta from '@/components/Cta.vue'
 import ImageArticle from '@/components/ImageArticle.vue';
 import Navegador from '@/components/Navegador.vue';
