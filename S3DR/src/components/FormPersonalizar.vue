@@ -108,7 +108,6 @@ form {
 label {
     font-size: 1rem;
     font-weight: 550;
-    font-style: italic;
 }
 
 /* Estilo para inputs y select */
