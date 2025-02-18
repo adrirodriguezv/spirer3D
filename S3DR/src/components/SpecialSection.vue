@@ -21,15 +21,6 @@
                     <RouterLink :to="`/personalizar`"><button>Personalizar</button></RouterLink>
                 </div>
             </div>
-
-            <div class="image-left">
-                <img src="../assets/img/soporteMando.png">
-                <div>
-                    <h2>Soportes</h2>
-                    <p>Soporte para mandos de consolas PS5, Xbox</p>
-                    <RouterLink :to="`/personalizar`"><button>Personalizar</button></RouterLink>
-                </div>
-            </div>
         </div>
         <p></p>
     </section>

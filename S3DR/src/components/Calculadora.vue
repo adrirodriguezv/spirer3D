@@ -46,6 +46,9 @@ const totalCost = computed(() => {
 <template>
   <section>
     <h2>Calculadora de precio</h2>
+    <p class="introduccion">En esta sección encontraras una calculadora que te dará un precio aproximado sobre tu producto. Debes tener en
+      cuenta las dimensiones, el tipo de material y el tiempo de impresión.</p>
+
     <form>
       <label>Ancho</label>
       <input type="number" v-model.number="width" min="0" placeholder="Cm" required>
@@ -84,10 +87,10 @@ section {
 }
 
 h2 {
-    text-align: left;
-    margin-left: 10%;
-    margin-right: 8%;
-    border-bottom: 1px #5454546b solid ;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 8%;
+  border-bottom: 1px #5454546b solid;
 }
 
 /* Estilos generales */
@@ -145,9 +148,18 @@ select:focus {
   border: 2px solid #4CAF50;
 }
 
-textarea::placeholder, input::placeholder{
-    font-weight: 300;
-    font-style: italic;
-    font-size: 85%;
+textarea::placeholder,
+input::placeholder {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 85%;
+}
+.introduccion{
+  width: 55%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4%;
+  margin-left: 22%;
 }
 </style>

@@ -35,6 +35,10 @@ const router = createRouter({
       component: () => import('../views/ConfirmarPedido.vue'),
     },
   ],
+  scrollBehavior() {
+    // Siempre que cambies de página, el scroll se pone al inicio
+    return { top: 0 };
+  }
 });
 
 export default router;

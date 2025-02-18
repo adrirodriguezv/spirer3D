@@ -10,8 +10,8 @@
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
                 </article>
 
@@ -20,8 +20,8 @@
                         <img src="../assets/img/qr.png" alt="Código QR">
                     </div>
                     <div class="product-info">
-                        <h3>Código QR</h3>
                         <p>Diseño de código QR, wifi, cartas, datos...</p>
+                        <div class="linea-horizontal"></div>
                     </div>
                 </article>
 
@@ -30,8 +30,8 @@
                         <img src="../assets/img/Nfc.png" alt="Llavero NFC">
                     </div>
                     <div class="product-info">
-                        <h3>NFC</h3>
                         <p>Llavero con chip NFC</p>
+                        <div class="linea-horizontal"></div>
                     </div>
                 </article>
 
@@ -40,74 +40,81 @@
                         <img src="../assets/img/PalaPadel.png" alt="Llavero pala de pádel">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero pala de pádel</h3>
                         <p>Llavero pala de pádel personalizada.</p>
+                        <div class="linea-horizontal"></div>
                     </div>
                 </article>
 
+                <div class="card">
+                    <div class="product-image">
+                        <img src="../assets/img/soporteMando.png">
+                    </div>
+                    <div class="product-info">
+                        <p>Soporte para mandos de consolas PS5, Xbox</p>
+                        <div class="linea-horizontal"></div>
+                    </div>
+                </div>
                 <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
-                </article> <article class="card">
+                </article>
+                <article class="card">
                     <div class="product-image">
                         <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
                     </div>
                     <div class="product-info">
-                        <h3>Llavero Nombre</h3>
                         <p>Diseño de llavero con nombre</p>
-                    </div>
-                </article> <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <h3>Llavero Nombre</h3>
-                        <p>Diseño de llavero con nombre</p>
+                        <div class="linea-horizontal"></div>
                     </div>
                 </article>
             </div>
@@ -120,6 +127,7 @@
     margin-top: 10%;
     margin-bottom: 10%;
 }
+
 a {
     text-decoration: none;
 }
@@ -147,6 +155,7 @@ img {
     color: var(--text);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .product-image {
@@ -167,6 +176,8 @@ img {
 
 .product-info p {
     margin-top: 0.5rem;
+    justify-content: center;
+    align-items: center;
 }
 
 h2 {
@@ -174,9 +185,17 @@ h2 {
     margin-left: 10%;
     margin-right: 8%;
     margin-bottom: -15%;
-    border-bottom: 1px #5454546b solid ;
+    border-bottom: 1px #5454546b solid;
 }
-
+.linea-horizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 1px;
+    background-color: #5454546b;
+    margin-top: 2%;
+}
 @media (max-width: 800px) {
     .container {
         grid-template-columns: repeat(2, 1fr);

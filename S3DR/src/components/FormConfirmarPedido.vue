@@ -20,7 +20,6 @@ const handleFileUpload = (event) => {
 
 <template>
     <section class="container">
-        <!-- FORMULARIO A LA IZQUIERDA -->
         <form>
             <h2>Datos Personales</h2>
             <label>Nombre</label>
@@ -44,12 +43,14 @@ const handleFileUpload = (event) => {
             <button type="submit">Confirmar Pedido</button>
         </form>
 
-        <!-- LÍNEA VERTICAL -->
         <div class="linea-vertical"></div>
 
-        <!-- RESUMEN DEL PEDIDO A LA DERECHA -->
         <div class="cesta">
-            <h2>Mi Pedido</h2>
+            <div class="intro">
+                <img src="../assets/img/pedido.png">
+                <h2>Mi Pedido</h2>
+            </div>
+
             <p><strong>Objeto:</strong> {{ store.objectName }}</p>
             <p><strong>Altura:</strong> {{ store.altura }} cm</p>
             <p><strong>Anchura:</strong> {{ store.anchura }} cm</p>
@@ -116,7 +117,7 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     align-items: center;
-
+    margin-left: 4%;
 }
 
 .cesta p {
@@ -125,5 +126,12 @@ button:hover {
 
 .cesta strong {
     font-weight: 550;
+}
+.intro{
+    display: flex;
+    align-items: center;
+}
+.cesta img {
+    width: 10%;
 }
 </style>
