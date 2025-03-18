@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path'); // Importa el módulo 'path'
 
 const app = express();
 const port = 3000;
@@ -11,8 +12,8 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-
-const upload = multer({ dest: 'uploads/' });
+// Configurar el middleware para servir imágenes
+app.use('/images', express.static(path.join(__dirname, 'uploads', 'imgs')));
 
 // Configurar transporte de Nodemailer (Usando Gmail como ejemplo)
 const transporter = nodemailer.createTransport({
@@ -25,7 +26,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Ruta para enviar el correo
-app.post('/send-email', upload.single('file'), async (req, res) => {
+app.post('/send-email', multer({ dest: 'uploads/' }).single('file'), async (req, res) => {
   const { objectName, altura, anchura, profundidad, material, color, comments } = req.body;
   const file = req.file;
 
@@ -66,6 +67,38 @@ app.post('/send-email', upload.single('file'), async (req, res) => {
   }
 });
 
+// Utiliza la cadena de conexión para conectarte a la base de datos
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: 'postgresql://neondb_owner:npg_lGzgm7Dyb1Ft@ep-tiny-night-a5ir36nh-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require',
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+// Conectar a la base de datos
+client.connect()
+  .then(() => {
+    console.log('Conectado a NeonDB');
+  })
+  .catch(err => {
+    console.error('Error al conectar a la base de datos', err.stack);
+  });
+
+// Crear una ruta para obtener los productos
+app.get('/productos', async (req, res) => {
+  try {
+    // Consulta SQL para obtener los productos
+    const result = await client.query('SELECT * FROM products');
+    res.json(result.rows);  // Enviar los productos como respuesta
+  } catch (err) {
+    console.error('Error al obtener los productos', err.stack);
+    res.status(500).json({ message: 'Error al obtener los productos' });
+  }
+});
+
+// Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });

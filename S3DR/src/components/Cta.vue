@@ -1,32 +1,35 @@
 <template>
   <div class="image-container">
-    <img src="../assets/img/CTA.jpg" alt="Imagen de fondo" />
+    <h3>BAMBU LAB A1</h3>
     <div class="text-overlay">
-      <h3>Innovación en cada capa, precisión en cada detalle</h3>
+      <h3></h3>
+    </div>
+    <div class="text-container">
+      <img src="../assets/img/CTA.jpg" alt="Imagen de fondo" />
     </div>
   </div>
 </template>
 
 <style scoped>
 * {
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .image-container {
   position: relative;
-  height: 600px; 
-  overflow: hidden; 
+  height: 600px;
+  overflow: hidden;
 }
 
 .image-container img {
-  width: 100%; 
+  width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   margin: 0;
   filter: brightness(65%);
 }
 
-h3{
+h3 {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -41,9 +44,9 @@ h3{
   text-align: center;
 }
 
-@media (max-width: 800px){
+@media (max-width: 800px) {
 
-  h3{
+  h3 {
     margin-top: 45%;
     font-size: 70%;
   }

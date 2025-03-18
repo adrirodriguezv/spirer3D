@@ -24,11 +24,11 @@ const router = createRouter({
       name: 'personalizar',
       component: () => import('../views/Personalizar.vue'),
     },
-    {
+    /*{
       path: '/precio',
       name: 'precio',
       component: () => import('../views/Precio.vue'),
-    },
+    },*/
     {
       path: '/confirmarPedido',
       name: 'confirmarPedido',

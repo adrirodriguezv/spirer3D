@@ -1,119 +1,33 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const productos = ref([]);
+
+const obtenerProductos = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/productos');
+        productos.value = response.data;
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+    }
+};
+
+onMounted(() => {
+    obtenerProductos();
+});
 </script>
 <template>
     <main>
         <section class="container-top">
             <h2>Productos</h2>
             <div class="container">
-                <article class="card">
+                <article v-for="producto in productos" :key="producto.id" class="card">
                     <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
+                        <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto">
                     </div>
                     <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/qr.png" alt="Código QR">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de código QR, wifi, cartas, datos...</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/Nfc.png" alt="Llavero NFC">
-                    </div>
-                    <div class="product-info">
-                        <p>Llavero con chip NFC</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/PalaPadel.png" alt="Llavero pala de pádel">
-                    </div>
-                    <div class="product-info">
-                        <p>Llavero pala de pádel personalizada.</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-
-                <div class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/soporteMando.png">
-                    </div>
-                    <div class="product-info">
-                        <p>Soporte para mandos de consolas PS5, Xbox</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </div>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="product-image">
-                        <img src="../assets/img/LlaverA.png" alt="Llavero Nombre">
-                    </div>
-                    <div class="product-info">
-                        <p>Diseño de llavero con nombre</p>
+                        <p>{{ producto.descripcion }}</p>
                         <div class="linea-horizontal"></div>
                     </div>
                 </article>
@@ -187,7 +101,8 @@ h2 {
     margin-bottom: -15%;
     border-bottom: 1px #5454546b solid;
 }
-.linea-horizontal{
+
+.linea-horizontal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -196,6 +111,7 @@ h2 {
     background-color: #5454546b;
     margin-top: 2%;
 }
+
 @media (max-width: 800px) {
     .container {
         grid-template-columns: repeat(2, 1fr);

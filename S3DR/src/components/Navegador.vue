@@ -30,9 +30,6 @@ onMounted(() => {
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/productos`">Productos</RouterLink>
         </li>
         <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/precio`">Precios</RouterLink>
-        </li>
-        <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/personalizar`">Personalizar</RouterLink>
         </li>
         <li>
