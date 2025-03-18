@@ -3,7 +3,6 @@
 <template>
     <section>
         <div class="image-grid">
-            <h2>Lorem Ipsum</h2>
             <div class="image-left">
                 <img src="../assets/img/copa.png">
                 <div>

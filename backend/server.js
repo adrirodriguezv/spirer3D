@@ -98,7 +98,23 @@ app.get('/productos', async (req, res) => {
   }
 });
 
+//Añadir productos
+app.post('/productos', async (req, res) => {
+  const { nombre, descripcion, imagen } = req.body;
+  // Aquí deberías guardar estos datos en tu base de datos
+  try {
+    const result = await client.query('INSERT INTO products (nombre, descripcion, imagen) VALUES ($1, $2, $3)', [nombre, descripcion, imagen]);
+    res.status(201).json({ message: 'Producto añadido exitosamente' });
+  } catch (error) {
+    console.error('Error al añadir producto:', error);
+    res.status(500).json({ message: 'Error al añadir producto' });
+  }
+});
+
+
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+
+

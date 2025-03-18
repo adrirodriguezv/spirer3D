@@ -35,6 +35,9 @@ onMounted(() => {
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
         </li>
+        <li>
+          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/nuevoProducto`">Añadir producto</RouterLink>
+        </li>
       </ul>
       <ul class="cliente-container">
         <div class="cliente">

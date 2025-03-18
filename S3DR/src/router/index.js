@@ -34,6 +34,11 @@ const router = createRouter({
       name: 'confirmarPedido',
       component: () => import('../views/ConfirmarPedido.vue'),
     },
+    {
+      path: '/nuevoProducto',
+      name: 'nuevoProducto',
+      component: () => import('../views/NuevoProducto.vue'),
+    },
   ],
   scrollBehavior() {
     // Siempre que cambies de página, el scroll se pone al inicio
