@@ -90,7 +90,7 @@ client.connect()
 app.get('/productos', async (req, res) => {
   try {
     // Consulta SQL para obtener los productos
-    const result = await client.query('SELECT * FROM products');
+    const result = await client.query('SELECT * FROM productos');
     res.json(result.rows);  // Enviar los productos como respuesta
   } catch (err) {
     console.error('Error al obtener los productos', err.stack);
@@ -103,7 +103,7 @@ app.post('/productos', async (req, res) => {
   const { nombre, descripcion, imagen } = req.body;
   // Aquí deberías guardar estos datos en tu base de datos
   try {
-    const result = await client.query('INSERT INTO products (nombre, descripcion, imagen) VALUES ($1, $2, $3)', [nombre, descripcion, imagen]);
+    const result = await client.query('INSERT INTO productos (nombre, descripcion, imagen) VALUES ($1, $2, $3)', [nombre, descripcion, imagen]);
     res.status(201).json({ message: 'Producto añadido exitosamente' });
   } catch (error) {
     console.error('Error al añadir producto:', error);
