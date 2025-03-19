@@ -3,6 +3,7 @@
 <template>
     <section>
         <div class="image-grid">
+            <h1>Hola</h1>
             <div class="image-left">
                 <img src="../assets/img/copa.png">
                 <div>
