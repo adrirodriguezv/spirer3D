@@ -5,12 +5,17 @@ const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path'); // Importa el módulo 'path'
+const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const { Pool } = require('pg');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 // Configurar el middleware para servir imágenes
 app.use('/images', express.static(path.join(__dirname, 'uploads', 'imgs')));
@@ -24,6 +29,81 @@ const transporter = nodemailer.createTransport({
     pass: "fbc7c82bcb845b", // Contraseña o App Password
   },
 });
+
+const pool = new Pool({
+  connectionString: 'postgresql://neondb_owner:npg_lGzgm7Dyb1Ft@ep-tiny-night-a5ir36nh-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require',
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+pool.connect()
+  .then(() => console.log("✅ Conectado a la base de datos"))
+  .catch(err => console.error("❌ Error de conexión a la base de datos:", err));
+
+  app.post('/api/login', async (req, res) => {
+    const { correo, contraseña } = req.body;
+  
+    try {
+      // Verificar el usuario
+      const result = await pool.query('SELECT * FROM usuarios WHERE correo = $1', [correo]);
+  
+      if (result.rows.length === 0) {
+        return res.status(400).json({ message: 'Usuario no encontrado' });
+      }
+  
+      const usuario = result.rows[0];
+  
+      // Verificar la contraseña encriptada
+      const passwordMatch = await bcrypt.compare(contraseña, usuario.contraseña);
+      if (!passwordMatch) {
+        return res.status(400).json({ message: 'Contraseña incorrecta' });
+      }
+  
+      // Generar el token JWT
+      const token = jwt.sign(
+        { id: usuario.id, tipo_usuario: usuario.tipo_usuario },
+        process.env.JWT_SECRET, // Usa la variable de entorno para la clave secreta
+        { expiresIn: '1h' }
+      );
+  
+      res.json({ token, tipo_usuario: usuario.tipo_usuario });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error en el servidor' });
+    }
+  });
+  
+  // Middleware para verificar el token JWT
+  const authenticateToken = (req, res, next) => {
+    const token = req.cookies.token || req.headers['authorization']?.split(' ')[1];
+  
+    if (!token) {
+      return res.status(403).json({ message: 'Acceso denegado' });
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: 'Token no válido' });
+      }
+      req.user = user;  // Agregar usuario a la solicitud
+      next();
+    });
+  };
+  
+  // Proteger rutas usando el middleware
+  app.get('/api/protected', authenticateToken, (req, res) => {
+    res.json({ message: 'Acceso concedido', user: req.user });
+  });
+
+//Logout
+app.post('/api/logout', (req, res) => {
+  // Aquí no necesitas hacer nada en el backend si estás usando JWT
+  res.json({ message: 'Has cerrado sesión correctamente' });
+});
+
+
+
 
 // Ruta para enviar el correo
 app.post('/send-email', multer({ dest: 'uploads/' }).single('file'), async (req, res) => {
@@ -48,11 +128,11 @@ app.post('/send-email', multer({ dest: 'uploads/' }).single('file'), async (req,
       `,
       attachments: file
         ? [
-            {
-              filename: file.originalname,
-              path: file.path,
-            },
-          ]
+          {
+            filename: file.originalname,
+            path: file.path,
+          },
+        ]
         : [],
     };
 
