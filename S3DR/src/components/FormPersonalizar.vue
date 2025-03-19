@@ -44,9 +44,9 @@ const sendOrder = () => {
 
 <template>
   <section class="container">
-    <h2>Datos del Pedido</h2>
+    <h2>Personaliza tu pedido</h2>
     <form @submit.prevent="sendOrder">
-    
+      <legend> Datos del pedido</legend>
       <label>Nombre del objeto</label>
       <input type="text" v-model="objectName" required />
 
@@ -100,6 +100,13 @@ h2 {
     border-bottom: 1px #5454546b solid ;
 }
 
+h3{
+    font-size: 150%;
+    text-transform: uppercase;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 /* Estilos generales */
 form {
     width: 35%;
@@ -113,6 +120,8 @@ form {
     border: 3px white solid;
     background-color: rgba(255, 255, 255, 0.329);
     margin-top: 5%;
+    box-shadow: 15px 3px 20px #0004,
+                -15px 0px 30px #0002;
 }
 
 /* Estilo para etiquetas */
@@ -171,5 +180,19 @@ textarea::placeholder, input::placeholder{
     font-weight: 300;
     font-style: italic;
     font-size: 85%;
+}
+
+legend{
+    color: rgba(255, 255, 255, 0.991);
+    margin-left: 10px;
+    padding: 15px;
+    font-size: 1.2rem;
+    background-color: rgba(126, 23, 210);
+    border-radius: 50px;
+    box-shadow: 3px 0px 7px #0003;
+    position: relative;
+    text-transform: uppercase;       
+    top: -55px;
+    text-align: center;
 }
 </style>

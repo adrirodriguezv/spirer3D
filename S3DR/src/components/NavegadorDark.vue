@@ -50,7 +50,7 @@ const updateUserState = () => {
         <!-- Mostrar solo si está autenticado y es admin -->
         <template v-if="isAuthenticated && userType === 'admin'">
           <li>
-            <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/admin`">Admin Dashboard</RouterLink>
+            <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/admin`">Admin</RouterLink>
           </li>
         </template>
       </ul>

@@ -7,7 +7,6 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
 <template>
     <NavegadorDark/>
     <div>
-        
         <FormLogin/>
     </div>
 </template>
