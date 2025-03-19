@@ -1,19 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import FormLogout from './ButtonLogout.vue';
 
 const isScrolled = ref(false);
+const userType = ref(null);
 
 const checkScroll = () => {
-  if (window.scrollY > 50) {
-    isScrolled.value = true;
-  } else {
-    isScrolled.value = false;
-  }
+  isScrolled.value = window.scrollY > 50;
 };
 
+const isAuthenticated = ref(false);
+
+// Revisar si el token está presente cuando la aplicación se monta
 onMounted(() => {
+  isAuthenticated.value = localStorage.getItem('token') !== null;
+  userType.value = localStorage.getItem('userType'); // Cargar el tipo de usuario al iniciar
   window.addEventListener('scroll', checkScroll);
 });
+
+// Para que el menú se actualice inmediatamente después de cerrar sesión
+const updateUserState = () => {
+  isAuthenticated.value = localStorage.getItem('token') !== null;
+  userType.value = localStorage.getItem('userType');
+};
 </script>
 
 <template>
@@ -21,7 +30,9 @@ onMounted(() => {
     <nav :class="{ 'scrolled': isScrolled }" id="nav">
       <ul>
         <div>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/`"><img src="/Logo3D.png"></RouterLink>
+          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/`">
+            <img src="/Logo3D.png">
+          </RouterLink>
         </div>
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/`">Inicio</RouterLink>
@@ -35,19 +46,26 @@ onMounted(() => {
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
         </li>
-        <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/nuevoProducto`">Añadir producto</RouterLink>
-        </li>
+
+        <!-- Mostrar solo si está autenticado y es admin -->
+        <template v-if="isAuthenticated && userType === 'admin'">
+          <li>
+            <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/admin`">Admin Dashboard</RouterLink>
+          </li>
+        </template>
       </ul>
+
       <ul class="cliente-container">
         <div class="cliente">
-          <img src="../assets/img/perfil.png" class="perfil-img">
+          <RouterLink :to="`/login`"><img src="../assets/img/perfil.png" class="perfil-img"></RouterLink>
           <img src="../assets/img/cesta.png" class="cesta-img">
+          <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
       </ul>
     </nav>
   </header>
 </template>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
