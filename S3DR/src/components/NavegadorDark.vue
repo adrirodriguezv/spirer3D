@@ -96,6 +96,7 @@ nav {
   background: transparent;
   transition: background-color 0.3s ease, border-radius 0.3s ease;
   padding: 0.5%;
+  border-bottom: 1px rgba(0, 0, 0, 0.096) solid;
 }
 
 nav.scrolled {

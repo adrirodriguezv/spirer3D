@@ -37,14 +37,17 @@ const sendOrder = () => {
   });
 
   // Redirigir a la página de confirmación
-  
+
   router.push('/confirmarPedido');
 };
 </script>
 
 <template>
   <section class="container">
-    <h2>Personaliza tu pedido</h2>
+    <p> En este formulario, podrás crear una pieza única que se ajuste exactamente a tus necesidades. Ya sea que estés
+      diseñando un componente específico para tu proyecto, creando un accesorio para tu dispositivo, o simplemente
+      quieras experimentar con diferentes formas y características, nuestro generador te permitirá personalizar tu pieza
+      3D de forma fácil y rápida.</p>
     <form @submit.prevent="sendOrder">
       <legend> Datos del pedido</legend>
       <label>Nombre del objeto</label>
@@ -89,74 +92,77 @@ const sendOrder = () => {
 
 <style scoped>
 section {
-    margin-top: 10%;
-    margin-bottom: 15%;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;
+  padding: 5%;
+  margin-top: 5%;
+  margin-bottom: 15%;
 }
 
 h2 {
-    text-align: left;
-    margin-left: 10%;
-    margin-right: 8%;
-    border-bottom: 1px #5454546b solid ;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 8%;
+  border-bottom: 1px #5454546b solid;
 }
 
-h3{
-    font-size: 150%;
-    text-transform: uppercase;
-    color: white;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+h3 {
+  font-size: 150%;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilos generales */
 form {
-    width: 35%;
-    padding: 30px 25px;
-    margin: 0 auto;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    font-family: Arial, sans-serif;
-    border: 3px white solid;
-    background-color: rgba(255, 255, 255, 0.329);
-    margin-top: 5%;
-    box-shadow: 15px 3px 20px #0004,
-                -15px 0px 30px #0002;
+  width: 35%;
+  padding: 30px 25px;
+  margin: 0 auto;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: Arial, sans-serif;
+  border: 3px white solid;
+  background-color: rgba(255, 255, 255, 0.329);
+  box-shadow: 15px 3px 20px #0004,
+    -15px 0px 30px #0002;
 }
 
 /* Estilo para etiquetas */
 label {
-    font-size: 1rem;
-    font-weight: 550;
+  font-size: 1rem;
+  font-weight: 550;
 }
 
 /* Estilo para inputs y select */
 input,
 select,
 textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 5px;
-    background: transparent;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 /* Transiciones al enfocar */
 input:focus,
 select:focus,
 textarea:focus {
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 /* Estilo para textarea */
 textarea {
-    height: 120px;
-    resize: none;
+  height: 120px;
+  resize: none;
 }
 
 /* Estilo del botón */
@@ -173,26 +179,33 @@ button {
 }
 
 button:hover {
-    background-color: #545454bd;
+  background-color: #545454bd;
 }
 
-textarea::placeholder, input::placeholder{
-    font-weight: 300;
-    font-style: italic;
-    font-size: 85%;
+textarea::placeholder,
+input::placeholder {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 85%;
 }
 
-legend{
-    color: rgba(255, 255, 255, 0.991);
-    margin-left: 10px;
-    padding: 15px;
-    font-size: 1.2rem;
-    background-color: rgba(126, 23, 210);
-    border-radius: 50px;
-    box-shadow: 3px 0px 7px #0003;
-    position: relative;
-    text-transform: uppercase;       
-    top: -55px;
-    text-align: center;
+legend {
+  color: rgba(255, 255, 255, 0.991);
+  margin-left: 10px;
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: rgb(0, 39, 148);
+  border-radius: 50px;
+  box-shadow: 3px 0px 7px #0003;
+  position: relative;
+  text-transform: uppercase;
+  top: -55px;
+  text-align: center;
+  font-weight: 600;
+}
+
+p {
+  width: 50%;
+  text-align: center;
 }
 </style>
