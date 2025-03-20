@@ -207,5 +207,6 @@ legend {
 p {
   width: 50%;
   text-align: center;
+  font-size: 120%;
 }
 </style>

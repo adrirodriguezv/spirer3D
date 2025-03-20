@@ -1,11 +1,18 @@
 <template>
-  <div class="image-container">
+  <div>
     <h3>BAMBU LAB A1</h3>
-    <div class="text-overlay">
-      <h3></h3>
-    </div>
-    <div class="text-container">
-      <img src="../assets/img/CTA.jpg" alt="Imagen de fondo" />
+    <div class="container">
+      <div class="text">
+        <h4>CARACTERISTICAS</h4>
+        <p>Calibración totalmente automática</p>
+        <p>Impresión multicolor (versión combinada)</p>
+        <p>Compensación activa del caudal</p>
+        <p>Boquilla de cambio rápido de 1 clip</p>
+        <p>Cancelación activa del ruido del motor</p>
+      </div>
+      <div class="img">
+        <img src="../assets/img/bambuLabA1.png" />
+      </div>
     </div>
   </div>
 </template>
@@ -15,10 +22,12 @@
   box-sizing: border-box;
 }
 
-.image-container {
-  position: relative;
-  height: 600px;
-  overflow: hidden;
+.container {
+  background-color: rgb(0, 0, 58);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .image-container img {
@@ -29,19 +38,17 @@
   filter: brightness(65%);
 }
 
+.text p{
+  color: white;
+}
+
 h3 {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 55px;
-  text-align: center;
+img {
+  width:50%;
 }
 
 @media (max-width: 800px) {

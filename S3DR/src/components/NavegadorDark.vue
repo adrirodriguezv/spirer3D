@@ -23,6 +23,7 @@ const updateUserState = () => {
   isAuthenticated.value = localStorage.getItem('token') !== null;
   userType.value = localStorage.getItem('userType');
 };
+
 </script>
 
 <template>
@@ -57,7 +58,7 @@ const updateUserState = () => {
 
       <ul class="cliente-container">
         <div class="cliente">
-          <RouterLink :to="`/login`"><img src="../assets/img/perfil.png" class="perfil-img"></RouterLink>
+          <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
           <img src="../assets/img/cesta.png" class="cesta-img">
           <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
