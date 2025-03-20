@@ -20,16 +20,18 @@ onMounted(() => {
 <template>
     <main>
         <section class="container-top">
-            <h2>Productos</h2>
+            <h2>Prod<span>uctos</span></h2>
             <div class="container">
                 <article v-for="producto in productos" :key="producto.id" class="card">
-                    <div class="product-image">
-                        <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto">
-                    </div>
-                    <div class="product-info">
-                        <p>{{ producto.descripcion }}</p>
-                        <div class="linea-horizontal"></div>
-                    </div>
+                    <RouterLink :to="`/detalleProducto/${producto.id}`">
+                        <div class="product-image">
+                            <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto">
+                        </div>
+                        <div class="product-info">
+                            <p>{{ producto.descripcion }}</p>
+                            <div class="linea-horizontal"></div>
+                        </div>
+                    </RouterLink>
                 </article>
             </div>
         </section>
@@ -95,11 +97,13 @@ img {
 }
 
 h2 {
+    color: rgb(138, 45, 45);
+    text-transform: uppercase;
+    font-style: italic;
     text-align: left;
     margin-left: 10%;
     margin-right: 8%;
     margin-bottom: -15%;
-    border-bottom: 1px #5454546b solid;
 }
 
 .linea-horizontal {
@@ -110,6 +114,11 @@ h2 {
     height: 1px;
     background-color: #5454546b;
     margin-top: 2%;
+}
+
+span {
+    font-weight: 400;
+    color: rgb(138, 45, 45);
 }
 
 @media (max-width: 800px) {

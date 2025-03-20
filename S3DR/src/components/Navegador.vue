@@ -59,7 +59,7 @@ const updateUserState = () => {
       <ul class="cliente-container">
         <div class="cliente">
           <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
-          <img src="../assets/img/cesta.png" class="cesta-img">
+          <!--<img src="../assets/img/cesta.png" class="cesta-img">-->
           <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
       </ul>
@@ -133,7 +133,7 @@ a {
 }
 
 a.scrolled {
-  color: #545454;
+  color: rgb(138, 45, 45);
 }
 
 li:hover {

@@ -2,10 +2,9 @@
 
 <template>
   <section class="contact-section">
-    <h2>Contacto</h2>
     <p>Contacta con nosotros para cualquier consulta o pregunta.</p>
-
     <form @submit.prevent="handleSubmit">
+      <legend>Contacto</legend>
       <div class="form-group">
         <label for="name">Nombre</label>
         <input type="text" id="name" v-model="name" placeholder="Tu nombre" required />
@@ -35,7 +34,20 @@
   padding: 40px;
   border-radius: 10px;
 }
-
+legend {
+  color: rgba(255, 255, 255, 0.991);
+  margin-left: 10px;
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: rgb(97, 33, 33);
+  border-radius: 50px;
+  box-shadow: 3px 0px 7px #0003;
+  position: relative;
+  text-transform: uppercase;
+  top: -55px;
+  text-align: center;
+  font-weight: 600;
+}
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -48,43 +60,62 @@ p {
 }
 
 form {
+  width: 35%;
+  padding: 30px 25px;
+  margin: 0 auto;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
+  font-family: Arial, sans-serif;
+  border: 3px white solid;
+  background-color: rgba(255, 255, 255, 0.329);
+  box-shadow: 15px 3px 20px #0004,
+    -15px 0px 30px #0002;
+    margin-top: 4%;
 }
 
 .form-group {
-  width: 100%;
-  max-width: 500px;
+  width: 30%;
   display: flex;
   flex-direction: column;
 }
 
 label {
+  text-align: left;
   font-size: 1rem;
-  margin-bottom: 5px;
+  font-weight: 550;
 }
 
-input, textarea {
-  width: 100%;
+input,
+textarea {
+  width: 334%;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 2px solid rgb(255, 255, 255);
   border-radius: 5px;
   background: transparent;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-input:focus, textarea:focus {
-  border-color: white;
+input:focus,
+textarea:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+textarea {
+  height: 120px;
+  resize: none;
 }
 
 button {
+  width: 100%;
   padding: 12px 20px;
   font-size: 1rem;
-  background-color: #4CAF50;
+  background-color: rgb(97, 33, 33);
   color: white;
   border: none;
   border-radius: 5px;
@@ -93,12 +124,9 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: rgb(138, 45, 45);
 }
 
-button:active {
-  background-color: #388e3c;
-}
 </style>
 
 <script setup>

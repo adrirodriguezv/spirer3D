@@ -52,13 +52,29 @@
 
 <style scoped>
 footer {
-  background-color: rgb(29, 29, 29);
-  padding: 20px 10%;
+  background-color: #efefef;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: auto;
   flex-wrap: wrap; /* Asegura que todo se ajuste en pantallas pequeñas */
+  border-top: 1px rgba(0, 0, 0, 0.089) solid;
+  position: relative;
+}
+
+footer::before,
+footer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%; /* Ajusta el tamaño del degradado en los laterales */
+  background: linear-gradient(to right, rgba(97, 33, 33, 0.2), transparent);
+}
+
+footer::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(97, 33, 33, 0.2), transparent);
 }
 
 .footer-container {
@@ -66,7 +82,7 @@ footer {
   justify-content: space-between;
   width: 100%;
   align-items: center; /* Alinea verticalmente */
-  margin-top: 8%;
+  margin-top: 4%;
 }
 
 .footer-section {
@@ -106,7 +122,7 @@ footer {
 }
 
 p {
-  color: white;
+  color: rgb(97, 33, 33);
 }
 
 .legals {
@@ -117,6 +133,7 @@ p {
   display: flex;
   justify-content: center;
   gap: 2rem; /* Espacio entre los enlaces legales */
+  margin-bottom: 2%;
 }
 
 a {

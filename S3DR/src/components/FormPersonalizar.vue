@@ -44,67 +44,88 @@ const sendOrder = () => {
 
 <template>
   <section class="container">
-    <p> En este formulario, podrás crear una pieza única que se ajuste exactamente a tus necesidades. Ya sea que estés
-      diseñando un componente específico para tu proyecto, creando un accesorio para tu dispositivo, o simplemente
-      quieras experimentar con diferentes formas y características, nuestro generador te permitirá personalizar tu pieza
-      3D de forma fácil y rápida.</p>
-    <form @submit.prevent="sendOrder">
-      <legend> Datos del pedido</legend>
-      <label>Nombre del objeto</label>
-      <input type="text" v-model="objectName" required />
+    <h2>Persona<span class="span-text">lizar</span></h2>
+    <div class="content">
 
-      <label>Altura</label>
-      <input type="number" v-model="altura" placeholder="Cm" required />
 
-      <label>Anchura</label>
-      <input type="number" v-model="anchura" placeholder="Cm" required />
+      <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
+        Ya sea que estés
+        diseñando un componente específico para tu proyecto, creando un accesorio para tu dispositivo, o simplemente
+        quieras experimentar con diferentes formas y características, nuestro generador te permitirá personalizar tu
+        pieza
+        3D de forma fácil y rápida.</p>
+      <form @submit.prevent="sendOrder">
+        <legend> Datos del pedido</legend>
 
-      <label>Profundidad</label>
-      <input type="number" v-model="profundidad" placeholder="Cm" required />
+        <label>Nombre del objeto</label>
+        <input type="text" v-model="objectName" required />
 
-      <label>Material</label>
-      <select v-model="material" required>
-        <option value="" disabled selected>Selecciona un material</option>
-        <option value="PLA">PLA</option>
-        <option value="PETG">PETG</option>
-        <option value="TPU">TPU (Flexible)</option>
-      </select>
+        <label>Altura</label>
+        <input type="number" v-model="altura" placeholder="Cm" required />
 
-      <label>Color</label>
-      <select v-model="color" required>
-        <option value="" disabled selected>Selecciona un color</option>
-        <option value="Negro">Negro</option>
-        <option value="Rojo">Rojo</option>
-        <option value="Dorado">Dorado</option>
-        <option value="Blanco">Blanco</option>
-        <option value="Amarillo">Amarillo</option>
-        <option value="Marron">Marron</option>
-      </select>
+        <label>Anchura</label>
+        <input type="number" v-model="anchura" placeholder="Cm" required />
 
-      <label>Comentarios adicionales</label>
-      <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
+        <label>Profundidad</label>
+        <input type="number" v-model="profundidad" placeholder="Cm" required />
 
-      <!-- Botón para enviar el pedido -->
-      <button type="submit">Confirmar Pedido</button>
-    </form>
+        <label>Material</label>
+        <select v-model="material" required>
+          <option value="" disabled selected>Selecciona un material</option>
+          <option value="PLA">PLA</option>
+          <option value="PETG">PETG</option>
+          <option value="TPU">TPU (Flexible)</option>
+        </select>
+
+        <label>Color</label>
+        <select v-model="color" required>
+          <option value="" disabled selected>Selecciona un color</option>
+          <option value="Negro">Negro</option>
+          <option value="Rojo">Rojo</option>
+          <option value="Dorado">Dorado</option>
+          <option value="Blanco">Blanco</option>
+          <option value="Amarillo">Amarillo</option>
+          <option value="Marron">Marron</option>
+        </select>
+
+        <label>Adjuntar imagen</label>
+        <input type="file" @change="handleFileUpload" accept="image/*" />
+
+
+        <label>Comentarios adicionales</label>
+        <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
+
+
+        <!-- Botón para enviar el pedido -->
+        <button type="submit">Confirmar Pedido</button>
+      </form>
+    </div>
   </section>
 </template>
 
 <style scoped>
-section {
+.content {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;
+  justify-content: center;
+  /* Centra horizontalmente */
   padding: 5%;
   margin-top: 5%;
   margin-bottom: 15%;
 }
 
 h2 {
-  text-align: left;
-  margin-left: 10%;
-  margin-right: 8%;
-  border-bottom: 1px #5454546b solid;
+    color: rgb(138, 45, 45);
+    text-transform: uppercase;
+    font-style: italic;
+    text-align: left;
+    margin-left: 10%;
+    margin-right: 8%;
+    margin-bottom: -4%;
+}
+
+.span-text{
+    font-weight: 400;
+    color: rgb(138, 45, 45);
 }
 
 h3 {
@@ -170,7 +191,7 @@ button {
   width: 100%;
   padding: 12px 20px;
   font-size: 1rem;
-  background-color: #5454546b;
+  background-color: rgb(97, 33, 33);
   color: white;
   border: none;
   border-radius: 5px;
@@ -179,7 +200,7 @@ button {
 }
 
 button:hover {
-  background-color: #545454bd;
+  background-color: rgb(138, 45, 45);
 }
 
 textarea::placeholder,
@@ -194,7 +215,7 @@ legend {
   margin-left: 10px;
   padding: 15px;
   font-size: 1.2rem;
-  background-color: rgb(0, 39, 148);
+  background-color: rgb(97, 33, 33);
   border-radius: 50px;
   box-shadow: 3px 0px 7px #0003;
   position: relative;
@@ -208,5 +229,12 @@ p {
   width: 50%;
   text-align: center;
   font-size: 120%;
+  color: rgb(83, 83, 83);
+  margin-top: 5%;
+}
+
+span {
+  color: rgb(138, 45, 45);
+  font-weight: bold;
 }
 </style>

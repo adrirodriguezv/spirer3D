@@ -47,6 +47,9 @@ const updateUserState = () => {
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
         </li>
+        <li>
+          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/detalleProducto`">Detalle</RouterLink>
+        </li>
 
         <!-- Mostrar solo si está autenticado y es admin -->
         <template v-if="isAuthenticated && userType === 'admin'">
@@ -59,7 +62,7 @@ const updateUserState = () => {
       <ul class="cliente-container">
         <div class="cliente">
           <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
-          <img src="../assets/img/cesta.png" class="cesta-img">
+          <!--<img src="../assets/img/cesta.png" class="cesta-img">-->
           <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
       </ul>
@@ -127,7 +130,7 @@ li {
 
 a {
   text-decoration: none;
-  color: #545454;
+  color: rgb(138, 45, 45);
   transition: color 0.3s ease;
   /* Transición suave al hacer hover */
 }

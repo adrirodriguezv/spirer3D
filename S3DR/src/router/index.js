@@ -49,6 +49,12 @@ const router = createRouter({
       name: 'admin',
       component: () => import('../views/Admin.vue'),
     },
+    {
+      path: '/detalleProducto/:id',
+      name: 'detalleproducto',
+      component: () => import('../views/Detalle.vue'),
+      props: true
+    },
   ],
   scrollBehavior() {
     // Siempre que cambies de página, el scroll se pone al inicio
