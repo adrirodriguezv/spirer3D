@@ -1,12 +1,14 @@
 <script setup>
 import FormPersonalizar from '@/components/FormPersonalizar.vue';
 import NavegadorDark from '@/components/NavegadorDark.vue';
+import FooterSection from '@/components/FooterSection.vue';
 
 </script>
 
 <template>
   <NavegadorDark/>
   <FormPersonalizar/>
+  <FooterSection/>
 </template>
 
 <style scoped>

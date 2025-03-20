@@ -9,6 +9,7 @@ import FooterSection from '@/components/FooterSection.vue';
     <div class="form-container">
         <FormAñadirProducto />
     </div>
+    <FooterSection/>
 </template>
 
 <style scoped>

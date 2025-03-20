@@ -1,11 +1,11 @@
 <script setup>
-import FormAñadirProducto from '@/components/FormAñadirProducto.vue';
+import FooterSection from '@/components/FooterSection.vue';
 import NavegadorDark from '@/components/NavegadorDark.vue';
 </script>
 
 <template>
+    <NavegadorDark />
     <div class="container">
-        <NavegadorDark />
         <div class="buttons">
             <RouterLink :to="`/nuevoProducto`"><button class="addProduct">Añadir producto</button></RouterLink>
             <RouterLink :to="`/nuevoProducto`"><button class="addProduct">Añadir producto</button></RouterLink>
@@ -13,6 +13,7 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
             <RouterLink :to="`/nuevoProducto`"><button class="addProduct">Añadir producto</button></RouterLink>
         </div>
     </div>
+    <FooterSection />
 </template>
 
 <style scoped>
@@ -31,7 +32,7 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
     justify-content: center;
     align-items: center;
     gap: 150px;
-    
+
 }
 
 .addProduct {

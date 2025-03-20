@@ -4,6 +4,7 @@ import ImageArticle from '@/components/ImageArticle.vue';
 import Navegador from '@/components/Navegador.vue';
 import SpecialSection from '@/components/SpecialSection.vue';
 import Video from '@/components/VideoBanner.vue';
+import FooterSection from '@/components/FooterSection.vue';
 </script>
 
 <template>
@@ -14,6 +15,7 @@ import Video from '@/components/VideoBanner.vue';
       <SpecialSection></SpecialSection>
       <Cta></Cta>
       <ImageArticle></ImageArticle>
+      <FooterSection/>
     </main>
   </body>
 </template>
