@@ -20,7 +20,6 @@ onMounted(() => {
     <Preloader v-if="isLoading" />
     <div v-else>
       <RouterView/>
-      <FooterSection/>
     </div>
   </div>
 </template>
