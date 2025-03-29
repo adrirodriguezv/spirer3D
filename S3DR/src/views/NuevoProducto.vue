@@ -1,6 +1,6 @@
 <script setup>
 import NavegadorDark from '@/components/NavegadorDark.vue';
-import FormAñadirProducto from '@/components/FormAñadirProducto.vue';
+import FormAñadirProducto from '@/components/formularios/FormAñadirProducto.vue';
 import FooterSection from '@/components/FooterSection.vue';
 </script>
 

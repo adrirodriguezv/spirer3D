@@ -1,34 +1,58 @@
+// stores/store.js
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import axios from '@/composables/axios.js';
 
-export const useFormStore = defineStore('formStore', () => {
-  const objectName = ref('');
-  const altura = ref('');
-  const anchura = ref('');
-  const profundidad = ref('');
-  const material = ref('');
-  const color = ref('');
-  const comments = ref('');
+export const useCarritoStore = defineStore('carrito', {
+  state: () => ({
+    carrito: [],
+  }),
 
-  // Función para establecer los datos del formulario
-  const setFormData = (formData) => {
-    objectName.value = formData.objectName;
-    altura.value = formData.altura;
-    anchura.value = formData.anchura;
-    profundidad.value = formData.profundidad;
-    material.value = formData.material;
-    color.value = formData.color;
-    comments.value = formData.comments;
-  };
+  actions: {
+    // Cargar el carrito desde la API (cuando el componente se monta)
+    async cargarCarrito() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/carrito');
+        this.carrito = response.data.productos;
+      } catch (error) {
+        console.error('Error al cargar el carrito:', error);
+      }
+    },
 
-  return {
-    objectName,
-    altura,
-    anchura,
-    profundidad,
-    material,
-    color,
-    comments,
-    setFormData,
-  };
+    // Agregar producto al carrito
+    async agregarProducto(producto) {
+      try {
+        // Aquí podrías hacer una solicitud POST para agregar al carrito en el backend
+        const response = await axios.post('http://localhost:3000/api/carrito', {
+          productoId: producto.id,
+          cantidad: 1,  // Puedes permitir a los usuarios elegir la cantidad
+        });
+        this.carrito.push(producto); // Actualizar el carrito localmente
+      } catch (error) {
+        console.error('Error al agregar el producto al carrito:', error);
+        throw error;
+      }
+    },
+
+    // Eliminar un producto del carrito
+    async eliminarDelCarrito(productoId) {
+      try {
+        await axios.delete(`http://localhost:3000/api/carrito/${productoId}`);
+        this.carrito = this.carrito.filter((producto) => producto.id !== productoId);
+      } catch (error) {
+        console.error('Error al eliminar el producto del carrito:', error);
+      }
+    },
+
+    // Vaciar el carrito (eliminar todos los productos)
+    async vaciarCarrito() {
+      try {
+        for (const producto of this.carrito) {
+          await axios.delete(`/api/carrito/${producto.id}`);
+        }
+        this.carrito = [];  // Vaciar el estado local
+      } catch (error) {
+        console.error('Error al vaciar el carrito:', error);
+      }
+    },
+  },
 });

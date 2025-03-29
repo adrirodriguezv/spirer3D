@@ -1,11 +1,13 @@
 <script setup>
-import FormConfirmarPedido from '@/components/formularios/FormConfirmarPedido.vue';
 import NavegadorDark from '@/components/NavegadorDark.vue';
+import Carrito from '@/components/Carrito.vue';
 import FooterSection from '@/components/FooterSection.vue';
-
 </script>
+
 <template>
+  <div>
     <NavegadorDark/>
-    <FormConfirmarPedido/>
+    <Carrito/>
     <FooterSection/>
+  </div>
 </template>

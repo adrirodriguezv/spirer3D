@@ -41,7 +41,7 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
     text-transform: uppercase;
     border-radius: 15px;
     border: none;
-    background-color: blueviolet;
+    background-color: rgb(97, 33, 33);
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -49,7 +49,7 @@ import NavegadorDark from '@/components/NavegadorDark.vue';
 }
 
 .addProduct:hover {
-    background-color: darkviolet;
+    background-color: rgb(138, 45, 45);
     transform: scale(1.1);
 }
 </style>

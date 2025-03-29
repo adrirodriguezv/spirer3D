@@ -48,6 +48,7 @@ legend {
   text-align: center;
   font-weight: 600;
 }
+
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -118,7 +119,7 @@ button {
   background-color: rgb(97, 33, 33);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -126,7 +127,6 @@ button {
 button:hover {
   background-color: rgb(138, 45, 45);
 }
-
 </style>
 
 <script setup>

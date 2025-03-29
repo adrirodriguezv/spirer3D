@@ -94,7 +94,7 @@ input {
 button {
     width: 102.5%;
     padding: 2%;
-    border-radius: 10px;
+    border-radius: 50px;
     color: white;
     border: none;
     background-color: #54545472;

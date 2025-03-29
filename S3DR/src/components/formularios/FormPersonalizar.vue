@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useFormStore } from '../store/store'; // Importar el store de Pinia
+import { useFormStore } from '../../store/store.js'; // Importar el store de Pinia
 
 // Variables del formulario
 const objectName = ref('');
@@ -61,13 +61,13 @@ const sendOrder = () => {
         <input type="text" v-model="objectName" required />
 
         <label>Altura</label>
-        <input type="number" v-model="altura" placeholder="Cm" required />
+        <input type="number" min="0" v-model="altura" placeholder="Cm" required />
 
         <label>Anchura</label>
-        <input type="number" v-model="anchura" placeholder="Cm" required />
+        <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
 
         <label>Profundidad</label>
-        <input type="number" v-model="profundidad" placeholder="Cm" required />
+        <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
 
         <label>Material</label>
         <select v-model="material" required>
@@ -194,7 +194,7 @@ button {
   background-color: rgb(97, 33, 33);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

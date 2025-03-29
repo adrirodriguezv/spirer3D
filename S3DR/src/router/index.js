@@ -24,11 +24,6 @@ const router = createRouter({
       name: 'personalizar',
       component: () => import('../views/Personalizar.vue'),
     },
-    /*{
-      path: '/precio',
-      name: 'precio',
-      component: () => import('../views/Precio.vue'),
-    },*/
     {
       path: '/confirmarPedido',
       name: 'confirmarPedido',
@@ -54,6 +49,11 @@ const router = createRouter({
       name: 'detalleproducto',
       component: () => import('../views/Detalle.vue'),
       props: true
+    },
+    {
+      path: '/carrito',
+      name: 'carrito',
+      component: () => import('../views/CarritoPagina.vue'),
     },
   ],
   scrollBehavior() {

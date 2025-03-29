@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form @submit.prevent="submitProduct">
-      <h2>Añadir producto a la BBDD</h2>
+      <legend>Añadir producto a la BBDD</legend>
       <label for="productName">Nombre del Producto:</label>
       <input type="text" v-model="product.nombre" id="productName" required />
 
@@ -40,52 +40,81 @@ const submitProduct = async () => {
 </script>
 
 <style scoped>
+
 form {
   width: 100%;
-  padding: 25px;
+  padding: 30px 25px;
+  margin: 0 auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding-right: 15%;
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+  font-family: Arial, sans-serif;
+  border: 3px white solid;
+  background-color: rgba(255, 255, 255, 0.329);
+  box-shadow: 15px 3px 20px #0004,
+    -15px 0px 30px #0002;
+    margin-top: 4%;
 }
 
-input, textarea {
+legend {
+  color: rgba(255, 255, 255, 0.991);
+  margin-left: 10px;
+  padding: 15px;
+  font-size: 1.2rem;
+  background-color: rgb(97, 33, 33);
+  border-radius: 50px;
+  box-shadow: 3px 0px 7px #0003;
+  position: relative;
+  text-transform: uppercase;
+  top: -55px;
+  text-align: center;
+  font-weight: 600;
+}
+
+input,
+textarea {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
-  border: 2px solid #ddd;
-  background-color: #f9f9f9;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-input:focus {
-  border-color: #66afe9;
-  outline: none;
+input:focus,
+textarea:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+textarea {
+  height: 120px;
+  resize: none;
 }
 
 label {
-  font-weight: bold;
-  margin-bottom: 5px;
+  text-align: left;
   font-size: 1rem;
+  font-weight: 550;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  background-color: rgb(97, 33, 33);
   color: white;
   border: none;
-  background-color: #545454;
-  font-size: 1.1rem;
+  border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #3a3a3a;
+  background-color: rgb(138, 45, 45);
 }
 </style>

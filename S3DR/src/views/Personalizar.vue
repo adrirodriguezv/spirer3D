@@ -1,5 +1,5 @@
 <script setup>
-import FormPersonalizar from '@/components/FormPersonalizar.vue';
+import FormPersonalizar from '@/components/formularios/FormPersonalizar.vue';
 import NavegadorDark from '@/components/NavegadorDark.vue';
 import FooterSection from '@/components/FooterSection.vue';
 

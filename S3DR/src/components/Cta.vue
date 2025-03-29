@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <h3>BAMBU LAB A1</h3>
-    <h4 class="intro">Nuestra Impresora</h4>
+    <h3>BAMBU LAB A1: <span class="intro">Nuestra impresora</span></h3>
     <div class="container-cta">
       <div class="text">
         <h4>CARACTERISTICAS</h4>
@@ -26,7 +25,7 @@
 }
 
 .container {
-  background-color: rgb(43, 15, 15);
+  background-color: rgb(107, 19, 19);
   padding-bottom: 5%;
 }
 
@@ -41,8 +40,8 @@
   text-align: center;
   color: white;
   font-weight: 100;
-  font-size: 110%;
-  margin-top: -2.5%;
+  font-size: 60%;
+  margin-top: -2%;
   font-style: italic;
 }
 
@@ -88,10 +87,6 @@ img {
   width: 60%;
 }
 
-.caracteristicas:hover{
-  
-
-}
 @media (max-width: 800px) {
 
   h3 {

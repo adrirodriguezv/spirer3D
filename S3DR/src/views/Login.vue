@@ -1,18 +1,23 @@
 <script setup>
-import FormLogin from '@/components/FormLogin.vue';
-import NavegadorDark from '@/components/NavegadorDark.vue';
+import FormLogin from '@/components/formularios/FormLogin.vue';
 
 </script>
 
 <template>
-    <div>
-        <FormLogin/>
-    </div>
+    <body>
+        <div>
+            <FormLogin />
+        </div>
+    </body>
 </template>
 
 <style scoped>
-div{
+body{
+    background-color: rgb(107, 19, 19);
+}
+div {
     margin-top: 10%;
     margin-bottom: 10%;
+
 }
 </style>

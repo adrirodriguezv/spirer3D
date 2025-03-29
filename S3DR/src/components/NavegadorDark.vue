@@ -47,10 +47,7 @@ const updateUserState = () => {
         <li>
           <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
         </li>
-        <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/detalleProducto`">Detalle</RouterLink>
-        </li>
-
+      
         <!-- Mostrar solo si está autenticado y es admin -->
         <template v-if="isAuthenticated && userType === 'admin'">
           <li>
@@ -62,7 +59,7 @@ const updateUserState = () => {
       <ul class="cliente-container">
         <div class="cliente">
           <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
-          <!--<img src="../assets/img/cesta.png" class="cesta-img">-->
+          <RouterLink :to="`/carrito`"><img src="../assets/img/cesta.png" class="cesta-img"></RouterLink>
           <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
       </ul>
