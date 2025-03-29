@@ -1,72 +1,50 @@
-<script setup>
-import { ref, onMounted } from 'vue';
-import FormLogout from './ButtonLogout.vue';
-
-const isScrolled = ref(false);
-const userType = ref(null);
-
-const checkScroll = () => {
-  isScrolled.value = window.scrollY > 50;
-};
-
-const isAuthenticated = ref(false);
-
-// Revisar si el token está presente cuando la aplicación se monta
-onMounted(() => {
-  isAuthenticated.value = localStorage.getItem('token') !== null;
-  userType.value = localStorage.getItem('userType'); // Cargar el tipo de usuario al iniciar
-  window.addEventListener('scroll', checkScroll);
-});
-
-// Para que el menú se actualice inmediatamente después de cerrar sesión
-const updateUserState = () => {
-  isAuthenticated.value = localStorage.getItem('token') !== null;
-  userType.value = localStorage.getItem('userType');
-};
-
-</script>
-
 <template>
   <header>
-    <nav :class="{ 'scrolled': isScrolled }" id="nav">
+    <nav>
       <ul>
-        <div>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/`">
-            <img src="/Logo3D.png">
-          </RouterLink>
-        </div>
         <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/`">Inicio</RouterLink>
+          <router-link to="/">Inicio</router-link>
         </li>
         <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/productos`">Productos</RouterLink>
+          <router-link to="/productos">Productos</router-link>
         </li>
         <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/personalizar`">Personalizar</RouterLink>
+          <router-link to="/personalizar">Personalizar</router-link>
         </li>
         <li>
-          <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/contacto`">Contacto</RouterLink>
+          <router-link to="/contacto">Contacto</router-link>
         </li>
-
-        <!-- Mostrar solo si está autenticado y es admin -->
+        
+        <!-- Solo muestra el enlace de admin si el usuario está autenticado y es admin -->
         <template v-if="isAuthenticated && userType === 'admin'">
           <li>
-            <RouterLink :class="{ 'scrolled': isScrolled }" :to="`/admin`">Admin</RouterLink>
+            <router-link to="/admin">Admin</router-link>
           </li>
         </template>
       </ul>
 
       <ul class="cliente-container">
         <div class="cliente">
-          <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
-          <!--<img src="../assets/img/cesta.png" class="cesta-img">-->
-          <RouterLink :to="`/carrito`"><img src="../assets/img/cesta.png" class="cesta-img"></RouterLink>
-          <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
+          <router-link to="/login"><img src="../assets/img/usuario.png" class="perfil-img"></router-link>
+          <router-link to="/"><img src="../assets/img/cesta.png" class="cesta-img"></router-link>
         </div>
       </ul>
     </nav>
   </header>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const isAuthenticated = ref(false);
+const userType = ref(null);
+
+onMounted(() => {
+  isAuthenticated.value = localStorage.getItem('token') !== null;
+  userType.value = localStorage.getItem('userType');
+});
+</script>
+
 
 
 <style scoped>

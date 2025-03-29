@@ -1,53 +1,53 @@
-// backend/routes/loginRoutes.js
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
-require('dotenv').config();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const app = express();
+app.use(express.json());
 
 const router = express.Router();
-
 const pool = new Pool({
   connectionString: 'postgresql://neondb_owner:npg_lGzgm7Dyb1Ft@ep-tiny-night-a5ir36nh-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require',
   ssl: false,
 });
 
-// Ruta para el login
+pool.connect()
+  .then(() => {
+    console.log('✅ Conexión a la base de datos exitosa');
+  })
+  .catch((error) => {
+    console.error('❌ Error al conectar a la base de datos:', error);
+  });
+
+// Ruta para autenticar a un usuario
 router.post('/login', async (req, res) => {
-  const { correo, password } = req.body;
+  const { correo, contraseña } = req.body;
 
   try {
-    // Consulta para verificar si el usuario existe en la base de datos
+    // Realizar la consulta para obtener el usuario desde la base de datos
     const result = await pool.query('SELECT * FROM usuarios WHERE correo = $1', [correo]);
 
     if (result.rows.length === 0) {
-      return res.status(400).json({ error: 'Usuario no encontrado' });
+      return res.status(401).json({ message: 'Usuario no encontrado' });
     }
 
-    const user = result.rows[0];
+    const usuario = result.rows[0]; // El usuario encontrado es el primer registro
 
-    // Verificar la contraseña usando bcrypt
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(400).json({ error: 'Contraseña incorrecta' });
+    // Comparar la contraseña
+    const isPasswordValid = await bcrypt.compare(contraseña, usuario.contraseña);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
     // Generar un token JWT
-    const token = jwt.sign(
-      { userId: user.id, userType: user.tipo_usuario }, // Datos que queremos en el token
-      'CristianoRonaldo27',  // Asegúrate de tener una clave secreta en .env
-      { expiresIn: '1h' }     // Expiración del token (1 hora en este caso)
-    );
+    const token = jwt.sign({ id: usuario.id, userType: usuario.tipo_usuario }, 'miClaveSecretaSuperFuerteYSegura123!@#', { expiresIn: '1h' });
 
-    // Enviar el token como respuesta
-    res.status(200).json({
-      message: 'Inicio de sesión exitoso',
-      token,
-      tipo_usuario: user.tipo_usuario,
-    });
+    // Enviar el token y tipo de usuario
+    res.json({ token, userType: usuario.tipo_usuario });
+
   } catch (error) {
-    console.error('Error en la ruta de login:', error);
-    res.status(500).json({ error: 'Hubo un error en el servidor' });
+    console.error('Error al iniciar sesión:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
   }
 });
 

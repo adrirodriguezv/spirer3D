@@ -4,7 +4,7 @@
     <div class="detalle-producto">
       <h2>{{ producto.nombre }}</h2>
       <p>{{ producto.descripcion }}</p>
-      <button @click="agregarAlCarrito">Añadir al carrito</button>
+      <RouterLink :to="`/productos`"><button>Volver</button></RouterLink>
     </div>
   </div>
 </template>

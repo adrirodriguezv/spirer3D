@@ -1,9 +1,7 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
 
-// Variables del formulario
 const objectName = ref('');
 const altura = ref('');
 const anchura = ref('');
@@ -12,17 +10,32 @@ const material = ref('');
 const color = ref('');
 const comments = ref('');
 
-// Crear una instancia del store
-const router = useRouter();  // Instancia del router
+const sendOrder = async () => {
+    try {
+        const pedido = {
+            objectName: objectName.value,
+            altura: altura.value,
+            anchura: anchura.value,
+            profundidad: profundidad.value,
+            material: material.value,
+            color: color.value,
+            comments: comments.value
+        };
 
+        await axios.post('http://localhost:3000/pedidos/crear', pedido);
+        alert('Pedido enviado con éxito');
+    } catch (error) {
+        console.error('Error al enviar pedido:', error);
+    }
+};
 </script>
+
+
 
 <template>
   <section class="container">
     <h2>Persona<span class="span-text">lizar</span></h2>
     <div class="content">
-
-
       <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
         Ya sea que estés
         diseñando un componente específico para tu proyecto, creando un accesorio para tu dispositivo, o simplemente

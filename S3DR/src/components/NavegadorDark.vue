@@ -59,7 +59,7 @@ const updateUserState = () => {
       <ul class="cliente-container">
         <div class="cliente">
           <RouterLink :to="`/login`"><img src="../assets/img/usuario.png" class="perfil-img"></RouterLink>
-          <RouterLink :to="`/carrito`"><img src="../assets/img/cesta.png" class="cesta-img"></RouterLink>
+          <RouterLink :to="`/`"><img src="../assets/img/cesta.png" class="cesta-img"></RouterLink>
           <FormLogout v-if="isAuthenticated" @logout="updateUserState"/>
         </div>
       </ul>

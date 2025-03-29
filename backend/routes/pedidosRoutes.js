@@ -4,8 +4,8 @@ require('dotenv').config();
 
 const router = express.Router();
 const pool = new Pool({
-  connectionString: process.env.DB_CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
+  connectionString: 'postgresql://neondb_owner:npg_lGzgm7Dyb1Ft@ep-tiny-night-a5ir36nh-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require',
+  ssl: false,
 });
 
 // 🔹 Crear un nuevo pedido

@@ -6,10 +6,6 @@ const bodyParser = require('body-parser');
 const loginRoutes = require('./routes/loginRoutes');
 const productosRoutes = require('./routes/productosRoutes');
 const pedidosRoutes = require('./routes/pedidosRoutes');
-const carritoRoutes = require('./routes/carritoRoutes');
-
-const authenticateToken = require('./middlewares/authMiddleware.js');
-// Rutas protegidas para el carrito
 
 
 const app = express();
@@ -26,6 +22,5 @@ app.use(bodyParser.json());
 app.use('/api', loginRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/pedidos', pedidosRoutes);
-app.use('/carrito', authenticateToken, carritoRoutes);
 
 app.listen(port, () => console.log(`✅ Servidor corriendo en http://localhost:${port}`));

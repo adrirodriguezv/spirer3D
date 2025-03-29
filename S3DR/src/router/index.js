@@ -50,11 +50,6 @@ const router = createRouter({
       component: () => import('../views/Detalle.vue'),
       props: true
     },
-    {
-      path: '/carrito',
-      name: 'carrito',
-      component: () => import('../views/CarritoPagina.vue'),
-    },
   ],
   scrollBehavior() {
     // Siempre que cambies de página, el scroll se pone al inicio
