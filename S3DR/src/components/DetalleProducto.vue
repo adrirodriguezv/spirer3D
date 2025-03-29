@@ -1,6 +1,6 @@
 <template>
   <div v-if="producto" class="container">
-    <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto" />
+    <img :src="`http://localhost:3000/imgs/${producto.imagen}`" alt="Imagen del producto" />
     <div class="detalle-producto">
       <h2>{{ producto.nombre }}</h2>
       <p>{{ producto.descripcion }}</p>
@@ -11,59 +11,24 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from '@/composables/axios';  // Importa el axios configurado
+import axios from 'axios';
 import { useRoute } from 'vue-router';
 
+// Obtener los parámetros de la ruta (el id del producto)
 const route = useRoute();
 const producto = ref(null);
 
-// Obtener el producto desde la API
+// Obtener los detalles del producto desde la API
 onMounted(async () => {
   try {
-    const response = await axios.get(`/productos/${route.params.id}`);
+    // Usar el id de la ruta para obtener el producto desde la API
+    const response = await axios.get(`http://localhost:3000/api/productos/${route.params.id}`);
     producto.value = response.data;
   } catch (error) {
     console.error('Error al obtener el producto:', error);
   }
 });
-
-// Definir las propiedades pasadas al componente
-const props = defineProps({
-  producto: Object,
-});
-
-// Estado para manejar la cantidad que ingresa el usuario
-const cantidad = ref(1); // Inicializamos con 1 como valor predeterminado
-
-// Función para agregar el producto al carrito
-const agregarAlCarrito = async () => {
-  try {
-    // Verificamos que el producto y la cantidad sean válidos
-    if (!cantidad.value || cantidad.value <= 0) {
-      alert('Por favor ingresa una cantidad válida.');
-      return;
-    }
-
-    const productoId = props.producto.id;
-    const cantidadProducto = cantidad.value;
-
-    // Realizamos la petición para agregar el producto al carrito
-    const response = await axios.post('http://localhost:3000/api/carrito', {
-      productoId,
-      cantidad: cantidadProducto
-    });
-
-    // Confirmación en la consola o en la UI
-    console.log('Producto agregado al carrito:', response);
-    alert('Producto agregado al carrito con éxito');
-  } catch (error) {
-    console.error('Error al agregar al carrito:', error);
-    alert('Hubo un error al agregar el producto al carrito');
-  }
-};
 </script>
-
-
 
 
 <style scoped>

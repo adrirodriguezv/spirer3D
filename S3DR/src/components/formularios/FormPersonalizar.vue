@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useFormStore } from '../../store/store.js'; // Importar el store de Pinia
+import axios from 'axios';
 
 // Variables del formulario
 const objectName = ref('');
@@ -14,32 +14,7 @@ const comments = ref('');
 
 // Crear una instancia del store
 const router = useRouter();  // Instancia del router
-const store = useFormStore();
 
-
-// Función para enviar el pedido y almacenar los datos en el store
-const sendOrder = () => {
-  // Validar que todos los campos estén completos
-  if (!objectName.value || !altura.value || !anchura.value || !profundidad.value || !material.value || !color.value) {
-    alert('Por favor, completa todos los campos');
-    return;
-  }
-
-  // Guardar los datos en el store
-  store.setFormData({
-    objectName: objectName.value,
-    altura: altura.value,
-    anchura: anchura.value,
-    profundidad: profundidad.value,
-    material: material.value,
-    color: color.value,
-    comments: comments.value,
-  });
-
-  // Redirigir a la página de confirmación
-
-  router.push('/confirmarPedido');
-};
 </script>
 
 <template>

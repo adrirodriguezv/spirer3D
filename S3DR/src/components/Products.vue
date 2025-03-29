@@ -6,7 +6,7 @@ const productos = ref([]);
 
 const obtenerProductos = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/productos');
+        const response = await axios.get('http://localhost:3000/api/productos');
         productos.value = response.data;
     } catch (error) {
         console.error('Error al obtener los productos:', error);
@@ -25,7 +25,7 @@ onMounted(() => {
                 <article v-for="producto in productos" :key="producto.id" class="card">
                     <RouterLink :to="`/detalleProducto/${producto.id}`">
                         <div class="product-image">
-                            <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto">
+                            <img :src="`http://localhost:3000/imgs/${producto.imagen}`" alt="Imagen del producto">
                         </div>
                         <div class="product-info">
                             <p>{{ producto.descripcion }}</p>

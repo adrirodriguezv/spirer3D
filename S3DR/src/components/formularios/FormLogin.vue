@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from '@/composables/axios.js';
+import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 // Variables para los campos de correo, contraseña y para manejar el error

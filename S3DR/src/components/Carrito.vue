@@ -1,43 +1,35 @@
 <template>
-  <div class="carrito-container">
-    <h2>Tu Carrito</h2>
-    <div v-if="carritoStore.carrito.length > 0">
-      <ul>
-        <li v-for="producto in carritoStore.carrito" :key="producto.id">
-          <div class="producto">
-            <img :src="`http://localhost:3000/images/${producto.imagen}`" alt="Imagen del producto" />
-            <div class="producto-info">
-              <h3>{{ producto.nombre }}</h3>
-              <p>Cantidad: {{ producto.cantidad }}</p>
-              <button @click="eliminarProducto(producto.id)">Eliminar</button>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="acciones">
-        <button @click="vaciarCarrito">Vaciar Carrito</button>
-        <router-link to="/checkout">
-          <button>Proceder a la compra</button>
-        </router-link>
+  <div v-if="carritoStore.productos.length > 0">
+    <h2>Carrito de Compras</h2>
+    <div v-for="(producto, index) in carritoStore.productos" :key="producto.id">
+      <div>
+        <p>{{ producto.nombre }} - ${{ producto.precio }}</p>
+        <p>Cantidad: {{ producto.cantidad }}</p>
+        <button @click="eliminarProducto(producto.id)">Eliminar</button>
       </div>
     </div>
-    <p v-else>No tienes productos en el carrito.</p>
+    <button @click="vaciarCarrito">Vaciar carrito</button>
+  </div>
+  <div v-else>
+    <p>No tienes productos en tu carrito.</p>
   </div>
 </template>
 
 <script setup>
-import { useCarritoStore } from '@/store/store.js';
+import { useCarritoStore } from '@/store/carrito';
 
 const carritoStore = useCarritoStore();
 
 const eliminarProducto = (productoId) => {
-  carritoStore.eliminarDelCarrito(productoId);
+  carritoStore.eliminarProducto(productoId);
 };
 
 const vaciarCarrito = () => {
   carritoStore.vaciarCarrito();
 };
 </script>
+
+
 
 <style scoped>
 .carrito-container {
