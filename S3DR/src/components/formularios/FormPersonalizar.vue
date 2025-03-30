@@ -1,12 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router'; 
+import { useRouter } from 'vue-router';
 import { useFormStore } from '../../store/store';
 import { useAuthStore } from '../../store/authStore';  // Importa el store de autenticación
 
-const productoSeleccionado = ref(""); 
-const productos = ref([]); 
+const productoSeleccionado = ref("");
+const productos = ref([]);
 const precioProducto = ref(0);
 
 const store = useFormStore();
@@ -20,7 +20,7 @@ const profundidad = ref(0);
 const material = ref("");
 const color = ref("");
 const comments = ref("");
-const textoQR = ref(""); 
+const textoQR = ref("");
 const tamaño = ref("");  // Campo para el tamaño
 const nombre = ref("");  // Campo para el tamaño
 
@@ -38,11 +38,11 @@ const seleccionarProducto = () => {
     (producto) => producto.nombre === productoSeleccionado.value
   );
   if (productoSeleccionadoObj) {
-    precioProducto.value = productoSeleccionadoObj.precio; 
+    precioProducto.value = productoSeleccionadoObj.precio;
   }
 
   store.setProductoSeleccionado(productoSeleccionado.value);
-  store.setPrecioProducto(precioProducto.value); 
+  store.setPrecioProducto(precioProducto.value);
 };
 
 // Función para enviar el pedido
@@ -92,89 +92,94 @@ const sendOrder = () => {
 
 <template>
   <section class="container">
-    <h2>Personalizar Pedido</h2>
     <div class="content">
-      <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.</p>
+      <div class="intro">
+        <h2>Personalizar pedido</h2>
+        <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
+        </p>
+      </div>
 
-      <form @submit.prevent="sendOrder">
-        <legend>Datos del pedido</legend>
+      <div class="form-container">
+        <form @submit.prevent="sendOrder">
+          <legend>Datos del pedido</legend>
 
-        <!-- Selección del producto -->
-        <label>Producto</label>
-        <select v-model="productoSeleccionado" @change="seleccionarProducto" required>
-          <option value="" disabled selected>Selecciona un producto</option>
-          <option v-for="producto in productos" :key="producto.id" :value="producto.nombre">
-            {{ producto.nombre }}
-          </option>
-          <option value="Otros">Otros...</option>
-        </select>
-
-        <!-- Mostrar campo para texto del código QR solo si el producto seleccionado es "Código QR" -->
-        <div v-if="productoSeleccionado === 'Código QR'">
-          <label>Texto para el Código QR</label>
-          <input type="text" v-model="textoQR" placeholder="Escribe lo que quieres en el QR" required />
-        </div>
-
-        <!-- Mostrar campo adicional solo si el producto tiene un nombre adicional (por ejemplo, Llavero) -->
-        <div v-if="productoSeleccionado === 'Llavero nombre'">
-          <label>Nombre para el llavero</label>
-          <input type="text" v-model="objectName" placeholder="Escribe el nombre que deseas" required />
-        </div>
-
-        <!-- Campo de tamaño si no es "Otros" -->
-        <div v-if="productoSeleccionado !== 'Otros'">
-          <label>Tamaño</label>
-          <select v-model="tamanyo" required>
-            <option value="" disabled selected>Selecciona un tamaño</option>
-            <option value="Grande">Grande</option>
-            <option value="Mediano">Mediano</option>
-            <option value="Pequeño">Pequeño</option>
+          <!-- Selección del producto -->
+          <label>Producto</label>
+          <select v-model="productoSeleccionado" @change="seleccionarProducto" required>
+            <option value="" disabled selected>Selecciona un producto</option>
+            <option v-for="producto in productos" :key="producto.id" :value="producto.nombre">
+              {{ producto.nombre }}
+            </option>
+            <option value="Otros">Otros...</option>
           </select>
-        </div>
 
-        <!-- Dimensiones si el producto es "Otros" -->
-        <div v-if="productoSeleccionado === 'Otros'">
-          <label>Nombre del producto</label>
-          <input type="text" v-model="nombre" placeholder="Nombre" required />
-          <label>Altura</label>
-          <input type="number" min="0" v-model="altura" placeholder="Cm" required />
-          <label>Anchura</label>
-          <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
-          <label>Profundidad</label>
-          <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
-        </div>
+          <!-- Mostrar campo para texto del código QR solo si el producto seleccionado es "Código QR" -->
+          <div v-if="productoSeleccionado === 'Código QR'">
+            <label>Texto para el Código QR</label>
+            <input type="text" v-model="textoQR" placeholder="Escribe lo que quieres en el QR" required />
+          </div>
 
-        <!-- Material -->
-        <label>Material</label>
-        <select v-model="material" required>
-          <option value="" disabled selected>Selecciona un material</option>
-          <option value="PLA">PLA</option>
-          <option value="PETG">PETG</option>
-          <option value="TPU">TPU (Flexible)</option>
-        </select>
+          <!-- Mostrar campo adicional solo si el producto tiene un nombre adicional (por ejemplo, Llavero) -->
+          <div v-if="productoSeleccionado === 'Llavero nombre'">
+            <label>Nombre para el llavero</label>
+            <input type="text" v-model="objectName" placeholder="Escribe el nombre que deseas" required />
+          </div>
 
-        <!-- Color -->
-        <label>Color</label>
-        <select v-model="color" required>
-          <option value="" disabled selected>Selecciona un color</option>
-          <option value="Negro">Negro</option>
-          <option value="Rojo">Rojo</option>
-          <option value="Dorado">Dorado</option>
-          <option value="Blanco">Blanco</option>
-          <option value="Amarillo">Amarillo</option>
-          <option value="Marron">Marron</option>
-          <option value="Gris">Gris plata</option>
-          <option value="Morado">Morado</option>
-          <option value="Cobre">Cobre</option>
-        </select>
+          <!-- Campo de tamaño si no es "Otros" -->
+          <div v-if="productoSeleccionado !== 'Otros'">
+            <label>Tamaño</label>
+            <select v-model="tamanyo" required>
+              <option value="" disabled selected>Selecciona un tamaño</option>
+              <option value="Grande">Grande</option>
+              <option value="Mediano">Mediano</option>
+              <option value="Pequeño">Pequeño</option>
+            </select>
+          </div>
 
-        <!-- Comentarios adicionales -->
-        <label>Comentarios adicionales</label>
-        <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
+          <!-- Dimensiones si el producto es "Otros" -->
+          <div v-if="productoSeleccionado === 'Otros'">
+            <label>Nombre del producto</label>
+            <input type="text" v-model="nombre" placeholder="Nombre" required />
+            <label>Altura</label>
+            <input type="number" min="0" v-model="altura" placeholder="Cm" required />
+            <label>Anchura</label>
+            <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
+            <label>Profundidad</label>
+            <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
+          </div>
 
-        <!-- Botón para confirmar el pedido -->
-        <button type="submit">Confirmar Pedido</button>
-      </form>
+          <!-- Material -->
+          <label>Material</label>
+          <select v-model="material" required>
+            <option value="" disabled selected>Selecciona un material</option>
+            <option value="PLA">PLA</option>
+            <option value="PETG">PETG</option>
+            <option value="TPU">TPU (Flexible)</option>
+          </select>
+
+          <!-- Color -->
+          <label>Color</label>
+          <select v-model="color" required>
+            <option value="" disabled selected>Selecciona un color</option>
+            <option value="Negro">Negro</option>
+            <option value="Rojo">Rojo</option>
+            <option value="Dorado">Dorado</option>
+            <option value="Blanco">Blanco</option>
+            <option value="Amarillo">Amarillo</option>
+            <option value="Marron">Marron</option>
+            <option value="Gris">Gris plata</option>
+            <option value="Morado">Morado</option>
+            <option value="Cobre">Cobre</option>
+          </select>
+
+          <!-- Comentarios adicionales -->
+          <label>Comentarios adicionales</label>
+          <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
+
+          <!-- Botón para confirmar el pedido -->
+          <button type="submit">Confirmar Pedido</button>
+        </form>
+      </div>
     </div>
   </section>
 </template>
@@ -191,6 +196,7 @@ const sendOrder = () => {
 }
 
 h2 {
+  font-size: 200%;
   color: rgb(138, 45, 45);
   text-transform: uppercase;
   font-style: italic;
@@ -214,7 +220,7 @@ h3 {
 
 /* Estilos generales */
 form {
-  width: 35%;
+  width: 100%;
   padding: 30px 25px;
   margin: 0 auto;
   border-radius: 10px;
@@ -226,6 +232,11 @@ form {
   background-color: rgba(255, 255, 255, 0.329);
   box-shadow: 15px 3px 20px #0004,
     -15px 0px 30px #0002;
+}
+
+.form-container{
+  width: 55%;
+  margin-right: 15%;
 }
 
 /* Estilo para etiquetas */
@@ -274,6 +285,7 @@ button {
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-transform: uppercase;
 }
 
 button:hover {
@@ -313,5 +325,17 @@ p {
 span {
   color: rgb(138, 45, 45);
   font-weight: bold;
+}
+
+.intro{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.intro p{
+  width: 80%;
 }
 </style>

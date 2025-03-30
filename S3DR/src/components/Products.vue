@@ -18,25 +18,22 @@ onMounted(() => {
 });
 </script>
 <template>
-    <main>
-        <section class="container-top">
-            <h2>Prod<span>uctos</span></h2>
-            <div class="container">
-                <article v-for="producto in productos" :key="producto.id" class="card">
-                    <RouterLink :to="`/detalleProducto/${producto.id}`">
-                        <div class="product-image">
-                            <img :src="`http://localhost:3000/imgs/${producto.imagen}`" alt="Imagen del producto">
-                        </div>
-                        <div class="product-info">
-                            <p>{{ producto.descripcion }}</p>
-                            <p>{{ producto.precio }}€</p>
-                            <div class="linea-horizontal"></div>
-                        </div>
-                    </RouterLink>
-                </article>
-            </div>
-        </section>
-    </main>
+    <div class="container-top">
+        <h2>Productos</h2>
+        <div class="container">
+            <article v-for="producto in productos" :key="producto.id" class="card">
+                <RouterLink :to="`/detalleProducto/${producto.id}`">
+                    <div class="product-image">
+                        <img :src="`http://localhost:3000/imgs/${producto.imagen}`" alt="Imagen del producto">
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ producto.nombre }}</h3>
+                        <p>€{{ producto.precio }}</p>
+                    </div>
+                </RouterLink>
+            </article>
+        </div>
+    </div>
 </template>
 
 <style scoped>
@@ -98,6 +95,7 @@ img {
 }
 
 h2 {
+    font-size: 200%;
     color: rgb(138, 45, 45);
     text-transform: uppercase;
     font-style: italic;

@@ -147,6 +147,7 @@ button {
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-transform: uppercase;
 }
 
 button:hover {

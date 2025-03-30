@@ -1,7 +1,7 @@
 <template>
     <section class="video-container">
       <div class="content">
-        <h2>Bienvenido a SpireR 3D!</h2>
+        <h2>Bienvenido a SRV 3D</h2>
         <p>
           Crea una amplia variedad de objetos personalizados como logos, medallas, copas, piezas de repuesto, muñecos,
           accesorios y llaveros. La versatilidad de la tecnología permite fabricar desde pequeños detalles hasta piezas
