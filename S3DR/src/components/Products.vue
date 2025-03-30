@@ -29,6 +29,7 @@ onMounted(() => {
                         </div>
                         <div class="product-info">
                             <p>{{ producto.descripcion }}</p>
+                            <p>{{ producto.precio }}€</p>
                             <div class="linea-horizontal"></div>
                         </div>
                     </RouterLink>

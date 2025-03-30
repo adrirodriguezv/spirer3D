@@ -1,40 +1,81 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'; // Importa el hook useRouter de Vue Router
+import { useFormStore } from '../../store/store'; // Importar el store de Pinia
 
-const objectName = ref('');
-const altura = ref('');
-const anchura = ref('');
-const profundidad = ref('');
-const material = ref('');
-const color = ref('');
-const comments = ref('');
+const productoSeleccionado = ref(""); // Para almacenar el producto seleccionado
+const productos = ref([]); // Para almacenar los productos obtenidos
+const precioProducto = ref(0);  // Para almacenar el precio del producto seleccionado
 
-const sendOrder = async () => {
-    try {
-        const pedido = {
-            objectName: objectName.value,
-            altura: altura.value,
-            anchura: anchura.value,
-            profundidad: profundidad.value,
-            material: material.value,
-            color: color.value,
-            comments: comments.value
-        };
+const store = useFormStore();  // Crear una instancia del store
+const router = useRouter();
 
-        await axios.post('http://localhost:3000/pedidos/crear', pedido);
-        alert('Pedido enviado con éxito');
-    } catch (error) {
-        console.error('Error al enviar pedido:', error);
-    }
+const objectName = ref("");
+const altura = ref(0);
+const anchura = ref(0);
+const profundidad = ref(0);
+const material = ref("");
+const color = ref("");
+const comments = ref("");
+const imagen = ref(null);
+const textoQR = ref(""); // Campo para el texto del código QR
+
+// Cargar productos desde la base de datos cuando se monta el componente
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/productos');
+    productos.value = response.data;
+  } catch (error) {
+    console.error('Error al cargar productos:', error);
+  }
+});
+
+// Función para manejar la subida de archivos
+const handleFileUpload = (event) => {
+  imagen.value = event.target.files[0];
+};
+
+// Función para manejar la selección del producto
+const seleccionarProducto = () => {
+  const productoSeleccionadoObj = productos.value.find(
+    (producto) => producto.nombre === productoSeleccionado.value
+  );
+  if (productoSeleccionadoObj) {
+    precioProducto.value = productoSeleccionadoObj.precio;  // Asignar el precio al producto seleccionado
+  }
+
+  // Guarda los datos del pedido en el store
+  store.setProductoSeleccionado(productoSeleccionado.value);
+  store.setPrecioProducto(precioProducto.value);  // Guarda el precio en el store
+};
+
+// Función para enviar el pedido
+const sendOrder = () => {
+  const orderData = {
+    objectName: objectName.value,
+    altura: altura.value,
+    anchura: anchura.value,
+    profundidad: profundidad.value,
+    material: material.value,
+    color: color.value,
+    comments: comments.value,
+    productoSeleccionado: productoSeleccionado.value,
+    precioProducto: precioProducto.value,
+    textoQR: textoQR.value,
+  };
+
+  // Guarda los datos en el store
+  store.setOrder(orderData);
+
+  // Redirige a la página de confirmar pedido
+  router.push('/confirmarPedido');
 };
 </script>
 
-
-
 <template>
   <section class="container">
-    <h2>Persona<span class="span-text">lizar</span></h2>
+    <h2>Personalizar Pedido</h2>
     <div class="content">
       <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
         Ya sea que estés
@@ -42,21 +83,42 @@ const sendOrder = async () => {
         quieras experimentar con diferentes formas y características, nuestro generador te permitirá personalizar tu
         pieza
         3D de forma fácil y rápida.</p>
+
+
       <form @submit.prevent="sendOrder">
-        <legend> Datos del pedido</legend>
+        <legend>Datos del pedido</legend>
 
-        <label>Nombre del objeto</label>
-        <input type="text" v-model="objectName" required />
+        <!-- Selección del producto -->
+        <label>Producto</label>
+        <select v-model="productoSeleccionado"  @change="seleccionarProducto" required>
+          <option value="" disabled selected>Selecciona un producto</option>
+          <option v-for="producto in productos" :key="producto.id" :value="producto.nombre">
+            {{ producto.nombre }}
+          </option>
+          <option value="Otros">Otros...</option>
+        </select>
 
+        <!-- Mostrar campo para texto del código QR solo si el producto seleccionado es "Código QR" -->
+        <div v-if="productoSeleccionado === 'Código QR'">
+          <label>Texto para el Código QR</label>
+          <input type="text" v-model="textoQR" placeholder="Escribe lo que quieres en el QR" required />
+        </div>
+
+        <!-- Mostrar campo adicional solo si el producto tiene un nombre adicional (por ejemplo, Llavero) -->
+        <div v-if="productoSeleccionado === 'Llavero nombre'">
+          <label>Nombre para el Llavero</label>
+          <input type="text" v-model="objectName" placeholder="Escribe el nombre que deseas" required />
+        </div>
+
+        <!-- Dimensiones -->
         <label>Altura</label>
         <input type="number" min="0" v-model="altura" placeholder="Cm" required />
-
         <label>Anchura</label>
         <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
-
         <label>Profundidad</label>
         <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
 
+        <!-- Material -->
         <label>Material</label>
         <select v-model="material" required>
           <option value="" disabled selected>Selecciona un material</option>
@@ -65,6 +127,7 @@ const sendOrder = async () => {
           <option value="TPU">TPU (Flexible)</option>
         </select>
 
+        <!-- Color -->
         <label>Color</label>
         <select v-model="color" required>
           <option value="" disabled selected>Selecciona un color</option>
@@ -74,17 +137,20 @@ const sendOrder = async () => {
           <option value="Blanco">Blanco</option>
           <option value="Amarillo">Amarillo</option>
           <option value="Marron">Marron</option>
+          <option value="Gris">Gris plata</option>
+          <option value="Morado">Morado</option>
+          <option value="Cobre">Cobre</option>
         </select>
 
+        <!-- Subida de archivo 
         <label>Adjuntar imagen</label>
-        <input type="file" @change="handleFileUpload" accept="image/*" />
+        <input type="file" @change="handleFileUpload" accept="image/*" />-->
 
-
+        <!-- Comentarios -->
         <label>Comentarios adicionales</label>
         <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
 
-
-        <!-- Botón para enviar el pedido -->
+        <!-- Botón para confirmar el pedido -->
         <button type="submit">Confirmar Pedido</button>
       </form>
     </div>
@@ -102,18 +168,18 @@ const sendOrder = async () => {
 }
 
 h2 {
-    color: rgb(138, 45, 45);
-    text-transform: uppercase;
-    font-style: italic;
-    text-align: left;
-    margin-left: 10%;
-    margin-right: 8%;
-    margin-bottom: -4%;
+  color: rgb(138, 45, 45);
+  text-transform: uppercase;
+  font-style: italic;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 8%;
+  margin-bottom: -4%;
 }
 
-.span-text{
-    font-weight: 400;
-    color: rgb(138, 45, 45);
+.span-text {
+  font-weight: 400;
+  color: rgb(138, 45, 45);
 }
 
 h3 {

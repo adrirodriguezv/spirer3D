@@ -4,6 +4,7 @@
     <div class="detalle-producto">
       <h2>{{ producto.nombre }}</h2>
       <p>{{ producto.descripcion }}</p>
+      <p>{{ producto.precio }}€</p>
       <RouterLink :to="`/productos`"><button>Volver</button></RouterLink>
     </div>
   </div>

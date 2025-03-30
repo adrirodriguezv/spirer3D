@@ -1,8 +1,33 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+import emailjs from 'emailjs-com';  // Importamos EmailJS
+
+const name = ref('');
+const email = ref('');
+const message = ref('');
+
+const handleSubmit = () => {
+  // Creamos los parámetros que se enviarán a la plantilla de EmailJS
+  const templateParams = {
+    name: name.value,
+    email: email.value,
+    message: message.value
+  };
+
+  // Usamos el método `send` de EmailJS
+  emailjs.send('service_kolvt2e', 'template_xyua9km', templateParams, '0z3N1h964PbVdv6r2')
+    .then((response) => {
+      alert('¡Correo enviado exitosamente!');
+    })
+    .catch((error) => {
+      alert('Error al enviar el correo: ' + error.text);
+    });
+};
+</script>
 
 <template>
   <section class="contact-section">
-    <p>Contacta con nosotros para cualquier consulta o pregunta.</p>
+    <p>Contacta con nosotros para cualquier consulta o pregunta. Pide tu presupuesto.</p>
     <form @submit.prevent="handleSubmit">
       <legend>Contacto</legend>
       <div class="form-group">
@@ -129,18 +154,3 @@ button:hover {
 }
 </style>
 
-<script setup>
-import { ref } from 'vue';
-
-const name = ref('');
-const email = ref('');
-const message = ref('');
-
-const handleSubmit = () => {
-  // Lógica de envío del formulario (simulada)
-  alert(`Formulario enviado:
-  Nombre: ${name.value}
-  Email: ${email.value}
-  Mensaje: ${message.value}`);
-};
-</script>
