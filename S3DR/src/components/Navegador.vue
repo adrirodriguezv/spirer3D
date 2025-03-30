@@ -30,10 +30,10 @@
             <img src="../assets/img/usuario.png" class="perfil-img" />
           </router-link>
 
-          <!-- Mostrar cesta siempre -->
+          <!--
           <router-link to="/">
             <img src="../assets/img/cesta.png" class="cesta-img" />
-          </router-link>
+          </router-link>-->
 
           <!-- Mostrar botón de cerrar sesión si está autenticado -->
           <template v-if="isAuthenticated">
@@ -70,7 +70,7 @@ const logout = () => {
   localStorage.removeItem('userId');
 
   // Redirigir al login
-  router.push('/login');
+  router.push('/');
 };
 </script>
 
@@ -104,6 +104,7 @@ nav {
   background: transparent;
   transition: background-color 0.3s ease, border-radius 0.3s ease;
   padding: 0.5%;
+  background-color: #efefef;
 }
 
 nav.scrolled {
@@ -129,7 +130,7 @@ li {
 
 a {
   text-decoration: none;
-  color: white;
+  color: rgb(182, 59, 59);
   transition: color 0.3s ease;
 }
 

@@ -20,10 +20,8 @@
         <div class="footer-section">
           <p class="text-footer">Métodos de Pago</p>
           <ul class="payment-methods">
-            <li><img src="../assets/img/bizum.png" /></li>
             <li><img src="../assets/img/paypal.png" /></li>
             <li><img src="../assets/img/googlePay.png" /></li>
-            <li><img src="../assets/img/applePay.png" /></li>
           </ul>
         </div>
       </div>

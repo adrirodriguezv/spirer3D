@@ -1,10 +1,10 @@
 <script setup>
 import FooterSection from '@/components/FooterSection.vue';
-import NavegadorDark from '@/components/NavegadorDark.vue';
+import Navegador from '@/components/Navegador.vue';
 </script>
 
 <template>
-    <NavegadorDark />
+    <Navegador />
     <div class="container">
         <div class="buttons">
             <RouterLink :to="`/nuevoProducto`"><button class="addProduct">Añadir producto</button></RouterLink>

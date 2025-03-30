@@ -1,11 +1,11 @@
 <script setup>
 import Productos from '@/components/Products.vue';
 import FooterSection from '@/components/FooterSection.vue';
-import NavegadorDark from '@/components/NavegadorDark.vue';
+import Navegador from '@/components/Navegador.vue';
 </script>
 
 <template>
-  <NavegadorDark/>
+  <Navegador/>
   <Productos></Productos>
   <FooterSection/>
 </template>

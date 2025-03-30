@@ -1,11 +1,11 @@
 <script setup>
-import NavegadorDark from '@/components/NavegadorDark.vue';
+import Navegador from '@/components/Navegador.vue';
 import FormAñadirProducto from '@/components/formularios/FormAñadirProducto.vue';
 import FooterSection from '@/components/FooterSection.vue';
 </script>
 
 <template>
-    <NavegadorDark />
+    <Navegador />
     <div class="form-container">
         <FormAñadirProducto />
     </div>

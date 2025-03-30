@@ -154,7 +154,7 @@ onMounted(() => {
                     alert('Pago realizado con éxito: ' + details.payer.name.given_name);
 
                     // Enviar el correo con los detalles del pedido
-                    enviarCorreo();  // Aquí se llama a la función de EmailJS
+                    //enviarCorreo();  // Aquí se llama a la función de EmailJS
 
                     // Redirigir o hacer lo que sea necesario después de completar el pago
                 });
@@ -189,7 +189,7 @@ onMounted(() => {
 
     const onApprove = () => {
         // Llamar a la función para enviar el correo con los detalles del pedido
-        enviarCorreo();
+        //enviarCorreo();
     };
 
 });
@@ -244,7 +244,7 @@ onMounted(() => {
                 <img src="../../assets/img/pedido.png" alt="Pedido">
                 <h2>Mi Pedido</h2>
             </div>
-            <img :src="`../../../../backend/uploads/imgs/${store.imagen}`">
+            <!--<img :src="`../../../../backend/uploads/imgs/${store.imagen}`">-->
             <!-- Mostrar los detalles del pedido desde el store -->
             <p><strong>Producto:</strong> {{ store.productoSeleccionado }}</p>
 
@@ -285,7 +285,6 @@ onMounted(() => {
 
 form {
     width: 45%;
-    padding: 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -295,26 +294,23 @@ form {
 
 input {
     width: 100%;
-    border: none;
-    padding: 1%;
+    padding: 4%;
     border-radius: 10px;
     border: 2px white solid;
     background-color: transparent;
 }
 
-input:focus {
-    border: 1px white solid;
-}
 
 button {
-    width: 102.5%;
-    padding: 2%;
+    width: 108%;
+    padding: 4%;
     border-radius: 50px;
     color: white;
     border: none;
     background-color: #54545472;
     margin-top: 2%;
     transition: 0.3s;
+    text-transform: uppercase;
 }
 
 button:hover {
@@ -357,7 +353,7 @@ button:hover {
 }
 
 .datos-personales {
-    width: 60%;
+    width: 70%;
     margin-left: 10%;
 }
 
@@ -368,5 +364,8 @@ button:hover {
 
 .buttons-pay {
     margin-top: 10%;
+}
+h2{
+    text-transform: uppercase;
 }
 </style>
