@@ -8,20 +8,50 @@ const pool = new Pool({
   ssl: false,
 });
 
+// Conexión a la base de datos
+pool.connect()
+  .then(() => {
+    console.log('✅ Conexión a la base de datos exitosa');
+  })
+  .catch((error) => {
+    console.error('❌ Error al conectar a la base de datos:', error);
+  });
+
 // 🔹 Crear un nuevo pedido
-router.post('/', async (req, res) => {
-  const { usuario_id, total, productos } = req.body;
+router.post('/crear-pedido', async (req, res) => {
+  const { usuarioId, productoId, metodoPago } = req.body;
+
+  if (!usuarioId || !productoId || !metodoPago) {
+    return res.status(400).json({
+      success: false,
+      mensaje: 'Faltan parámetros obligatorios',
+    });
+  }
+
   try {
-    const result = await pool.query('INSERT INTO pedidos (usuario_id, total) VALUES ($1, $2) RETURNING id', [usuario_id, total]);
-    const pedido_id = result.rows[0].id;
+    // SQL para insertar un nuevo pedido
+    const query = `
+      INSERT INTO pedidos (usuario_id, producto_id, metodo_pago)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `;
+    const values = [usuarioId, productoId, metodoPago];
 
-    for (const producto of productos) {
-      await pool.query('INSERT INTO pedido_detalle (pedido_id, producto_id, cantidad) VALUES ($1, $2, $3)', [pedido_id, producto.id, producto.cantidad]);
-    }
+    // Ejecutar la consulta de inserción
+    const result = await pool.query(query, values);
 
-    res.status(201).json({ message: 'Pedido realizado exitosamente' });
+    // El pedido insertado se encuentra en result.rows[0]
+    return res.status(201).json({
+      success: true,
+      mensaje: 'Pedido creado con éxito',
+      pedido: result.rows[0], // Aquí devolvemos el pedido recién insertado
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear el pedido' });
+    console.error('Error al crear el pedido:', error);
+    return res.status(500).json({
+      success: false,
+      mensaje: 'Error al crear el pedido',
+    });
   }
 });
 

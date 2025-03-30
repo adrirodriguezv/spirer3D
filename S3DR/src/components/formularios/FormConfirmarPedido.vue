@@ -1,6 +1,7 @@
 <script setup>
 import { useFormStore } from '../../store/store'; // Importa el store de Pinia
 import { ref, onMounted } from 'vue';
+import emailjs from 'emailjs-com';
 
 // Crear una instancia del store
 const store = useFormStore();
@@ -15,43 +16,90 @@ const codigoPostal = ref("");  // Campo de código postal
 
 let autocomplete;
 
-const onGooglePayClicked = async () => {
-    const paymentDataRequest = {
+// Reemplaza con tu Merchant ID
+const MERCHANT_ID = 'BCR2DN4T27N7H6YQ';
+
+const createPaymentDataRequest = () => {
+    const precio = store.precioProducto;
+    return {
         apiVersion: 2,
         apiVersionMinor: 0,
-        allowedPaymentMethods: [{
-            type: 'CARD',
-            parameters: {
-                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                allowedCardNetworks: ['MASTERCARD', 'VISA'],
-            },
-            tokenizationSpecification: {
-                type: 'PAYMENT_GATEWAY',
+        allowedPaymentMethods: [
+            {
+                type: 'CARD',
                 parameters: {
-                    'gateway': 'example',
-                    'gatewayMerchantId': 'exampleGatewayMerchantId',
+                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                    allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD'],
+                },
+                tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    parameters: {
+                        gateway: 'example', // Cambia esto por el gateway que estás utilizando
+                        gatewayMerchantId: 'gateway-merchant-id', // El ID del comerciante de tu gateway
+                    },
                 },
             },
-        }],
+        ],
+        merchantInfo: {
+            merchantId: MERCHANT_ID,
+            merchantName: 'Nombre del comerciante',
+        },
         transactionInfo: {
             totalPriceStatus: 'FINAL',
-            totalPrice: '50.00',  // El precio total
-            currencyCode: 'USD',
-        },
-        merchantInfo: {
-            merchantName: 'Example Merchant',
-            merchantId: 'exampleMerchantId',
+            totalPrice: precio.toString(), // El precio total de la transacción
+            currencyCode: 'EUR', // El código de la moneda (por ejemplo, 'USD', 'EUR')
         },
     };
-
-    try {
-        const paymentData = await googlePayClient.loadPaymentData(paymentDataRequest);
-        console.log('Pago realizado:', paymentData);
-        // Procesar el pago con tu servidor
-    } catch (error) {
-        console.error('Error en Google Pay:', error);
-    }
 };
+
+
+const enviarCorreo = () => {
+  const templateParams = {
+    nombre: nombre.value,
+    apellidos: apellidos.value,
+    email: email.value,
+    direccion: direccion.value,
+    ciudad: ciudad.value,
+    codigoPostal: codigoPostal.value,
+    producto: store.productoSeleccionado,
+    precio: store.precioProducto,
+    tamaño: store.tamaño,
+    altura: store.altura,
+    anchura: store.anchura,
+    profundidad: store.profundidad,
+    material: store.material,
+    color: store.color,
+    comentarios: store.comments,
+  };
+
+  // Enviar correo usando EmailJS
+  emailjs.send('service_kolvt2e', 'template_o6vcblr', templateParams, '0z3N1h964PbVdv6r2')
+    .then(async (response) => {
+      console.log('Correo enviado con éxito:', response);
+      alert('Correo enviado con éxito');
+
+      // Aquí hacemos el POST para insertar el pedido en la base de datos
+      try {
+        const pedidoData = {
+          usuarioId: store.usuarioId, // ID del usuario que realizó el pedido
+          productoId: store.productoId, // ID del producto comprado
+          metodoPago: store.metodoPago, // Método de pago
+        };
+
+        // Llamada a la API para crear el pedido en la base de datos
+        const pedidoResponse = await axios.post('http://localhost:3000/api/pedidos/crear-pedido', pedidoData);
+        console.log('Pedido creado:', pedidoResponse.data);
+      } catch (error) {
+        console.error('Error al crear el pedido:', error);
+        alert('Hubo un problema al procesar tu pedido');
+      }
+    })
+    .catch((error) => {
+      console.error('Error al enviar el correo:', error);
+      alert('Error al enviar el correo');
+    });
+};
+
 
 onMounted(() => {
     // Inicializar el autocompletado de la dirección
@@ -104,6 +152,10 @@ onMounted(() => {
             onApprove(data, actions) {
                 return actions.order.capture().then(function (details) {
                     alert('Pago realizado con éxito: ' + details.payer.name.given_name);
+
+                    // Enviar el correo con los detalles del pedido
+                    enviarCorreo();  // Aquí se llama a la función de EmailJS
+
                     // Redirigir o hacer lo que sea necesario después de completar el pago
                 });
             },
@@ -111,53 +163,79 @@ onMounted(() => {
     }
 
 
-    // Verificar si Google Pay está disponible
-    if (window.google && window.google.payments && window.google.payments.api) {
-        const googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+    // Cargar el objeto de Google Pay
+    const paymentsClient = new google.payments.api.PaymentsClient({
+        environment: 'TEST', // Usa 'PRODUCTION' en un entorno de producción
+    });
 
-        const button = googlePayClient.createButton({
-            onClick: onGooglePayClicked,
-            buttonColor: 'black',
-            buttonType: 'long',
-        });
+    const paymentDataRequest = createPaymentDataRequest();
 
-        // Renderizar el botón de Google Pay
-        //document.getElementById('google-pay-button').appendChild(button);
-    }
+    const button = paymentsClient.createButton({
+        onClick: () => {
+            paymentsClient.loadPaymentData(paymentDataRequest)
+                .then((paymentData) => {
+                    // Maneja el pago exitoso
+                    console.log('Pago exitoso', paymentData);
+                })
+                .catch((error) => {
+                    // Maneja los errores
+                    console.error('Error en Google Pay', error);
+                });
+        },
+    });
 
+    document.getElementById('google-pay-button').appendChild(button);
+
+
+    const onApprove = () => {
+        // Llamar a la función para enviar el correo con los detalles del pedido
+        enviarCorreo();
+    };
 
 });
+
 </script>
 
 <template>
     <section class="container">
-        <form>
-            <h2>Datos Personales</h2>
-            <label>Nombre</label>
-            <input type="text" v-model="nombre" required />
+        <div class="datos-personales">
+            <form @submit.prevent="enviarCorreo">
+                <h2>Datos Personales</h2>
+                <label>Nombre</label>
+                <input type="text" v-model="nombre" required />
 
-            <label>Apellidos</label>
-            <input type="text" v-model="apellidos" required />
+                <label>Apellidos</label>
+                <input type="text" v-model="apellidos" required />
 
-            <label>Correo Electrónico</label>
-            <input type="email" v-model="email" required />
+                <label>Correo Electrónico</label>
+                <input type="email" v-model="email" required />
 
-            <label for="autocomplete">Dirección:</label>
-            <!-- Aquí aseguramos que la dirección seleccionada se muestre en el input -->
-            <input id="autocomplete" type="text" v-model="direccion" placeholder="Introduce tu dirección" required />
+                <label for="autocomplete">Dirección:</label>
+                <!-- Aquí aseguramos que la dirección seleccionada se muestre en el input -->
+                <input id="autocomplete" type="text" v-model="direccion" placeholder="Introduce tu dirección"
+                    required />
 
-            <!-- Ciudad autocompletada -->
-            <label>Ciudad</label>
-            <input type="text" v-model="ciudad" placeholder="Ciudad" required disabled />
+                <!-- Ciudad autocompletada -->
+                <label>Ciudad</label>
+                <input type="text" v-model="ciudad" placeholder="Ciudad" required disabled />
 
-            <!-- Código Postal autocompletado -->
-            <label>Código Postal</label>
-            <input type="text" v-model="codigoPostal" placeholder="Código Postal" required disabled />
+                <!-- Código Postal autocompletado -->
+                <label>Código Postal</label>
+                <input type="text" v-model="codigoPostal" placeholder="Código Postal" required disabled />
 
-            <button type="submit">Confirmar Pedido</button>
-            <!-- Botón de PayPal -->
-            <div id="paypal-button-container"></div>
-        </form>
+                <button type="submit">Guardar y continuar</button>
+
+            </form>
+        </div>
+
+        <div class="pago">
+            <h2>Pago</h2>
+            <div class="buttons-pay">
+                <!-- Botón de PayPal -->
+                <div id="paypal-button-container"></div>
+                <div id="google-pay-button"></div>
+            </div>
+        </div>
 
         <div class="linea-vertical"></div>
 
@@ -166,7 +244,7 @@ onMounted(() => {
                 <img src="../../assets/img/pedido.png" alt="Pedido">
                 <h2>Mi Pedido</h2>
             </div>
-
+            <img :src="`../../../../backend/uploads/imgs/${store.imagen}`">
             <!-- Mostrar los detalles del pedido desde el store -->
             <p><strong>Producto:</strong> {{ store.productoSeleccionado }}</p>
 
@@ -180,6 +258,7 @@ onMounted(() => {
                 <p><strong>Texto para el código QR:</strong> {{ store.textoQR }}</p>
             </div>
 
+            <p><strong>Tamaño:</strong> {{ store.tamanyo }}</p>
             <p><strong>Altura:</strong> {{ store.altura }} cm</p>
             <p><strong>Anchura:</strong> {{ store.anchura }} cm</p>
             <p><strong>Profundidad:</strong> {{ store.profundidad }} cm</p>
@@ -199,9 +278,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 90%;
-    margin: 5% auto;
+    width: 80%;
     margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 form {
@@ -275,5 +354,19 @@ button:hover {
 
 .precio {
     font-size: 200%;
+}
+
+.datos-personales {
+    width: 60%;
+    margin-left: 10%;
+}
+
+.pago {
+    width: 20%;
+    margin-right: 10%;
+}
+
+.buttons-pay {
+    margin-top: 10%;
 }
 </style>

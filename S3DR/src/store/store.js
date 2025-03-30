@@ -12,6 +12,11 @@ export const useFormStore = defineStore('form', {
     comments: '',
     textQR: '',
     precioProducto: 0,
+    tamanyo: '',
+    imagen: '',
+    usuarioId: 0,
+    productoId: 0,
+    metodoPago: '',
   }),
   actions: {
     setProductoSeleccionado(producto) {
@@ -31,6 +36,8 @@ export const useFormStore = defineStore('form', {
       this.color = data.color;
       this.comments = data.comments;
       this.textQR = data.textQR;
+      this.tamanyo = data.tamanyo;
+      this.imagen = data.imagen;
     },
   },
   getters: {

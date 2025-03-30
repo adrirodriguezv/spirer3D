@@ -1,13 +1,15 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // Importa useRouter para acceder al router
-import axios from 'axios'; // Asegúrate de que axios está importado
+import { useRouter } from 'vue-router'; 
+import axios from 'axios'; 
+import { useAuthStore } from '../../store/authStore';  // Asegúrate de importar el store
 
-const router = useRouter(); // Usamos useRouter() para acceder al router
+const router = useRouter(); 
 
 const correo = ref('');
 const contraseña = ref('');
 const errorMessage = ref('');
+const authStore = useAuthStore();  // Usa el store de autenticación
 
 const login = async () => {
   try {
@@ -16,13 +18,23 @@ const login = async () => {
       contraseña: contraseña.value,
     });
 
-    // Verifica si la respuesta tiene datos
-    if (response && response.data) {
-      const { token, userType } = response.data;
+    console.log('Respuesta del servidor:', response.data);  // Verificar la respuesta completa
 
-      // Guardar el token en localStorage
+    if (response && response.data) {
+      const { token, userType, userId } = response.data;
+
+      // Verifica si el userId no es undefined
+      console.log('UserId recibido:', userId); // Esto debería mostrar el userId si todo está bien
+
+      // Usar Pinia Store para guardar los valores
+      authStore.setToken(token);  // Guardar el token
+      authStore.setUserType(userType);  // Guardar el tipo de usuario
+      authStore.setUserId(userId);  // Guardar el userId
+
+      // Guardar el token y userId en localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
+      localStorage.setItem('userId', userId);
 
       // Redirigir según el tipo de usuario
       if (userType === 'admin') {
@@ -34,18 +46,18 @@ const login = async () => {
       errorMessage.value = 'No se recibió una respuesta válida del servidor';
     }
   } catch (error) {
-    // Muestra un mensaje de error si la solicitud falla
     if (error.response) {
-      // El servidor respondió con un error
       errorMessage.value = 'Error de inicio de sesión: ' + error.response.data.message;
     } else {
-      // No se recibió respuesta del servidor (ejemplo: conexión rechazada)
       errorMessage.value = 'Error al conectar con el servidor';
     }
     console.error(error);
   }
 };
+
+
 </script>
+
 
 <template>
   <div>

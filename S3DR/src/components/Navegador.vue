@@ -25,8 +25,20 @@
 
       <ul class="cliente-container">
         <div class="cliente">
-          <router-link to="/login"><img src="../assets/img/usuario.png" class="perfil-img"></router-link>
-          <router-link to="/"><img src="../assets/img/cesta.png" class="cesta-img"></router-link>
+          <!-- Mostrar icono de usuario o enlace a login si no está autenticado -->
+          <router-link v-if="!isAuthenticated" to="/login">
+            <img src="../assets/img/usuario.png" class="perfil-img" />
+          </router-link>
+
+          <!-- Mostrar cesta siempre -->
+          <router-link to="/">
+            <img src="../assets/img/cesta.png" class="cesta-img" />
+          </router-link>
+
+          <!-- Mostrar botón de cerrar sesión si está autenticado -->
+          <template v-if="isAuthenticated">
+            <button @click="logout">Cerrar sesión</button>
+          </template>
         </div>
       </ul>
     </nav>
@@ -34,20 +46,36 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../store/authStore';  // Asegúrate de importar el store
 
-const isAuthenticated = ref(false);
-const userType = ref(null);
+const router = useRouter();  // Para redirigir
+const authStore = useAuthStore();  // Usa el store de autenticación
 
-onMounted(() => {
-  isAuthenticated.value = localStorage.getItem('token') !== null;
-  userType.value = localStorage.getItem('userType');
-});
+// Usar computed en lugar de ref para una reactividad más eficiente
+const isAuthenticated = computed(() => authStore.token !== null);
+const userType = computed(() => authStore.userType);
+
+// Función de cierre de sesión
+const logout = () => {
+  // Limpiar el store
+  authStore.setToken(null);
+  authStore.setUserType(null);
+  authStore.setUserId(null);
+
+  // Limpiar localStorage
+  localStorage.removeItem('token');
+  localStorage.removeItem('userType');
+  localStorage.removeItem('userId');
+
+  // Redirigir al login
+  router.push('/login');
+};
 </script>
 
-
-
 <style scoped>
+/* Estilos para el navbar */
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * {
@@ -80,22 +108,17 @@ nav {
 
 nav.scrolled {
   background: #efefef;
-  /* Fondo oscuro con opacidad */
   border-bottom: 1px #5454541a solid;
 }
 
 ul {
   display: flex;
   justify-content: flex-start;
-  /* Centra los elementos */
   align-items: center;
-  /* Alinea los elementos verticalmente */
   width: 100%;
-  /* Asegura que ocupe el ancho completo */
   list-style: none;
   padding: 2px 0;
   gap: 20px;
-  /* Espaciado entre elementos */
   margin-left: 15%;
 }
 
@@ -108,7 +131,6 @@ a {
   text-decoration: none;
   color: white;
   transition: color 0.3s ease;
-  /* Transición suave al hacer hover */
 }
 
 a.scrolled {
@@ -138,16 +160,26 @@ li:hover {
 
 .cesta-img {
   width: 25px;
+}
 
+button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d32f2f;
 }
 
 @media (max-width: 800px) {
   nav {
     width: 90%;
     left: 5%;
-    /* Mantiene el margen lateral */
     transform: none;
-    /* Sin transformación */
   }
 
   img {

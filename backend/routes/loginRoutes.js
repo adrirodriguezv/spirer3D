@@ -31,7 +31,9 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Usuario no encontrado' });
     }
 
-    const usuario = result.rows[0]; // El usuario encontrado es el primer registro
+    const usuario = result.rows[0];
+    console.log('Usuario recuperado:', usuario);  // Verifica que el campo `id` esté presente en el objeto `usuario`
+    // El usuario encontrado es el primer registro
 
     // Comparar la contraseña
     const isPasswordValid = await bcrypt.compare(contraseña, usuario.contraseña);
@@ -40,10 +42,14 @@ router.post('/login', async (req, res) => {
     }
 
     // Generar un token JWT
-    const token = jwt.sign({ id: usuario.id, userType: usuario.tipo_usuario }, 'miClaveSecretaSuperFuerteYSegura123!@#', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: usuario.id, userType: usuario.tipo_usuario }, 'miClaveSecretaSuperFuerteYSegura123!@#', { expiresIn: '1h' });
 
-    // Enviar el token y tipo de usuario
-    res.json({ token, userType: usuario.tipo_usuario });
+    // Enviar solo el token, el tipo de usuario y el id del usuario
+    res.json({
+      token,
+      userType: usuario.tipo_usuario,
+      userId: usuario.id // Solo enviamos el id del usuario
+    });
 
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
