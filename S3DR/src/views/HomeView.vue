@@ -5,6 +5,7 @@ import Navegador from '@/components/Navegador.vue';
 import SpecialSection from '@/components/SpecialSection.vue';
 import Video from '@/components/VideoBanner.vue';
 import FooterSection from '@/components/FooterSection.vue';
+import Scroll from '@/components/Scroll.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import FooterSection from '@/components/FooterSection.vue';
     <main>
       <Navegador/>
       <Video></Video>
+      <Scroll/>
       <SpecialSection></SpecialSection>
       <Cta></Cta>
       <ImageArticle></ImageArticle>

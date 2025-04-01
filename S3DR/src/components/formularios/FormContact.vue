@@ -27,9 +27,9 @@ const handleSubmit = () => {
 
 <template>
   <section class="contact-section">
+    <h2>Contacto</h2>
     <p>Contacta con nosotros para cualquier consulta o pregunta. Pide tu presupuesto.</p>
     <form @submit.prevent="handleSubmit">
-      <legend>Contacto</legend>
       <div class="form-group">
         <label for="name">Nombre</label>
         <input type="text" id="name" v-model="name" placeholder="Tu nombre" required />
@@ -59,25 +59,12 @@ const handleSubmit = () => {
   padding: 40px;
   border-radius: 10px;
 }
-legend {
-  color: rgba(255, 255, 255, 0.991);
-  margin-left: 10px;
-  padding: 15px;
-  font-size: 1.2rem;
-  background-color: rgb(97, 33, 33);
-  border-radius: 50px;
-  box-shadow: 3px 0px 7px #0003;
-  position: relative;
-  text-transform: uppercase;
-  top: -55px;
-  text-align: center;
-  font-weight: 600;
-}
 
 h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  font-weight: bold;
+    font-size: 300%;
+    color: rgb(77, 77, 77);
+    text-transform: uppercase;
+    text-align: center;
 }
 
 p {
@@ -94,36 +81,38 @@ form {
   flex-direction: column;
   gap: 20px;
   font-family: Arial, sans-serif;
-  border: 3px white solid;
-  background-color: rgba(255, 255, 255, 0.329);
+  background-color: rgb(172, 11, 11);
   box-shadow: 15px 3px 20px #0004,
     -15px 0px 30px #0002;
     margin-top: 4%;
 }
 
 .form-group {
-  width: 30%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 label {
-  text-align: left;
   font-size: 1rem;
   font-weight: 550;
+  text-align: left;
+  margin-top: 2%;
+  color: white;
 }
 
 input,
 textarea {
-  width: 334%;
+  width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.674);
+  border-radius: 20px;
   background: transparent;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
+  margin-top: 1%;
 }
 
 input:focus,
@@ -141,17 +130,28 @@ button {
   width: 100%;
   padding: 12px 20px;
   font-size: 1rem;
-  background-color: rgb(97, 33, 33);
+  background-color: rgba(0, 0, 0, 0.219);
   color: white;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 button:hover {
-  background-color: rgb(138, 45, 45);
+  background-color: rgba(0, 0, 0, 0.438);
 }
+
+textarea::placeholder,
+input::placeholder {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 85%;
+  color: white;
+}
+
+
 </style>
 

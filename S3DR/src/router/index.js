@@ -55,6 +55,11 @@ const router = createRouter({
       name: 'registro',
       component: () => import('../views/Register.vue'),
     },
+    {
+      path: '/scroll',
+      name: 'scroll',
+      component: () => import('../views/ScrollPage.vue'),
+    },
   ],
   scrollBehavior() {
     // Siempre que cambies de página, el scroll se pone al inicio

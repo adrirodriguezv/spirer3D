@@ -1,7 +1,7 @@
 <template>
     <section class="video-container">
       <div class="content">
-        <h2>Bienvenido a SRV 3D</h2>
+        <h2>SRV 3D</h2>
         <p>
           Crea una amplia variedad de objetos personalizados como logos, medallas, copas, piezas de repuesto, muñecos,
           accesorios y llaveros. La versatilidad de la tecnología permite fabricar desde pequeños detalles hasta piezas
@@ -33,17 +33,20 @@
   .content {
     position: absolute; /* Posiciona el contenido sobre el video */
     z-index: 1; /* Asegura que el contenido esté por encima del video */
-    text-align: center; /* Centra el texto */
+    text-align: left; /* Centra el texto */
     padding: 20px; /* Añade un poco de padding para que el texto no quede pegado al borde */
     width: 100%;
     max-width: 75%; /* Establece un máximo para que el texto no ocupe toda la pantalla */
+    margin-top: 10%;
   }
   
   /* Título */
   .content h2 {
-    font-size: 3.5rem; /* Ajusta el tamaño del título */
+    font-size: 800%; /* Ajusta el tamaño del título */
     margin: 0 0 20px 0; /* Margen debajo del título */
     color: white;
+    display: flex;
+    justify-content: left;
   }
   
   /* Párrafo */

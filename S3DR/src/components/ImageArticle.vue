@@ -1,4 +1,36 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue';
+
+// Activamos el observer cuando el componente se haya montado
+onMounted(() => {
+  // Seleccionar todos los artículos
+  const articles = document.querySelectorAll('article');
+  
+  // Función que será ejecutada cuando el artículo entre en el viewport
+  const observerCallback = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Añadir la clase 'visible' cuando el artículo es visible en el viewport
+        entry.target.classList.add('visible');
+        // Dejar de observar el artículo una vez que ha aparecido
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  // Crear el observer
+  const observer = new IntersectionObserver(observerCallback, {
+    threshold: 0.5, // El 50% del artículo debe estar visible para activarse
+  });
+
+  // Empezar a observar los artículos
+  articles.forEach(article => {
+    article.classList.add('fade-in');
+    observer.observe(article);
+  });
+});
+</script>
+
 
 <template>
     <section>
@@ -96,6 +128,20 @@ article:hover img {
 span{
     font-weight: bold;
 }
+
+/* Animación de aparición */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Cuando la clase fade-in se activa (elemento visible) */
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 @media (max-width: 800px) {
     .parrafos{

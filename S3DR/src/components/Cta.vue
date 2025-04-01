@@ -25,7 +25,7 @@
 }
 
 .container {
-  background-color: rgb(107, 19, 19);
+  background-color: rgb(172, 11, 11);
   padding-bottom: 5%;
 }
 

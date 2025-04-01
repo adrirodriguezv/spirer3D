@@ -38,7 +38,7 @@ onMounted(() => {
 
 <style scoped>
 .container-top {
-    margin-top: 10%;
+    margin-top: 8%;
     margin-bottom: 10%;
 }
 
@@ -59,26 +59,28 @@ img {
     /* Espacio entre tarjetas */
     margin: 5%;
     margin-top: 20%;
+    
 
 }
 
 .card {
     position: relative;
-    padding: 1rem;
-    border-radius: 0.9rem;
-    color: var(--text);
+    padding: 8%;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+    background-color: white;
+    border-radius: 15px;
+    filter: drop-shadow(5px 10px 15px rgba(8, 9, 13, 0.08));
+    margin: 3%;
 }
 
 .product-image {
     width: 100%;
     transition: transform 500ms ease-in-out;
-    filter: drop-shadow(5px 10px 15px rgba(8, 9, 13, 0.4));
+    
 }
 
-.card:hover .product-image {
+.card:hover {
     transform: scale(1.1);
 }
 
@@ -95,10 +97,9 @@ img {
 }
 
 h2 {
-    font-size: 200%;
-    color: rgb(138, 45, 45);
+    font-size: 300%;
+    color: rgb(77, 77, 77);
     text-transform: uppercase;
-    font-style: italic;
     text-align: left;
     margin-left: 10%;
     margin-right: 8%;
