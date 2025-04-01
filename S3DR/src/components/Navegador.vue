@@ -1,7 +1,15 @@
 <template>
   <header>
     <nav>
-      <ul>
+      <!-- Icono de hamburguesa / cruz -->
+      <div class="hamburger" @click="toggleMenu">
+        <div :class="{'line': true, 'open': menuOpen}"></div>
+        <div :class="{'line': true, 'open': menuOpen}"></div>
+        <div :class="{'line': true, 'open': menuOpen}"></div>
+      </div>
+
+      <!-- Menú desplegable -->
+      <ul :class="{'active': menuOpen}">
         <li>
           <router-link to="/">Inicio</router-link>
         </li>
@@ -30,11 +38,6 @@
             <img src="../assets/img/usuario.png" class="perfil-img" />
           </router-link>
 
-          <!--
-          <router-link to="/">
-            <img src="../assets/img/cesta.png" class="cesta-img" />
-          </router-link>-->
-
           <!-- Mostrar botón de cerrar sesión si está autenticado -->
           <template v-if="isAuthenticated">
             <button @click="logout">Cerrar sesión</button>
@@ -46,18 +49,19 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../store/authStore';  // Asegúrate de importar el store
+import { useAuthStore } from '../store/authStore'; // Asegúrate de importar el store
 
-const router = useRouter();  // Para redirigir
-const authStore = useAuthStore();  // Usa el store de autenticación
+const router = useRouter(); // Para redirigir
+const authStore = useAuthStore(); // Usa el store de autenticación
 
-// Usar computed en lugar de ref para una reactividad más eficiente
 const isAuthenticated = computed(() => authStore.token !== null);
 const userType = computed(() => authStore.userType);
 
-// Función de cierre de sesión
+const menuOpen = ref(false); // Estado para controlar si el menú está abierto o cerrado
+
+// Función para cerrar sesión
 const logout = () => {
   // Limpiar el store
   authStore.setToken(null);
@@ -71,6 +75,11 @@ const logout = () => {
 
   // Redirigir al login
   router.push('/');
+};
+
+// Función para alternar la visibilidad del menú en pantallas pequeñas
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
 };
 </script>
 
@@ -92,95 +101,117 @@ img {
 
 nav {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  text-transform: none;
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 100%;
   z-index: 1000;
   background: transparent;
   transition: background-color 0.3s ease, border-radius 0.3s ease;
   padding: 0.5%;
-  background-color: #efefef;
 }
 
-nav.scrolled {
-  background: #efefef;
-  border-bottom: 1px #5454541a solid;
-}
-
-ul {
+/* Estilo para el icono hamburguesa */
+.hamburger {
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  width: 100%;
-  list-style: none;
-  padding: 2px 0;
-  gap: 20px;
-  margin-left: 15%;
-}
-
-li {
-  font-weight: 500;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-a {
-  text-decoration: none;
-  color: rgb(182, 59, 59);
-  transition: color 0.3s ease;
-}
-
-a.scrolled {
-  color: rgb(138, 45, 45);
-}
-
-li:hover {
-  transform: scale(1.1);
-}
-
-.cliente {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.cliente-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 5%;
-}
-
-.perfil-img {
-  width: 36px;
-}
-
-.cesta-img {
-  width: 25px;
-}
-
-button {
-  background-color: #f44336;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+  height: 30px;
+  width: 30px;
   cursor: pointer;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 1100;
 }
 
-button:hover {
-  background-color: #d32f2f;
+.hamburger .line {
+  height: 1px;
+  width: 30px;
+  background-color: #000;
+  border-radius: 5px;
+  transition: all 0.3s ease;
 }
 
+.hamburger .open:nth-child(1) {
+  transform: rotate(45deg) translateY(10px);
+}
+
+.hamburger .open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger .open:nth-child(3) {
+  transform: rotate(-45deg) translateY(-10px);
+}
+
+/* Estilo del menú lateral */
+ul.active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(172, 11, 11);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+  z-index: 1000;
+  opacity: 1;
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Fondo rojo y texto blanco */
+ul li {
+  font-size: 2rem;
+  text-align: center;
+}
+
+ul a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Animación de apertura */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Hacer el menú invisible cuando no está abierto */
+ul {
+  display: none;
+  position: absolute; /* Establecerlo como absoluto para que ocupe toda la pantalla */
+  top: 0;
+  left: 0;
+}
+
+/* Mostrar el menú cuando está activo en pantallas pequeñas */
 @media (max-width: 800px) {
+  ul.active {
+    display: flex;
+  }
+
   nav {
-    width: 90%;
-    left: 5%;
-    transform: none;
+    width: 100%;
+  }
+
+  /* Redimensionar icono de hamburguesa en pantallas pequeñas */
+  .hamburger {
+    left: 15px;
+    top: 15px;
   }
 
   img {

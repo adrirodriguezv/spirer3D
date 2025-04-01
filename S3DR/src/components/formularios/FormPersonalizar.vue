@@ -189,7 +189,6 @@ const sendOrder = () => {
 .content {
   display: flex;
   justify-content: center;
-  /* Centra horizontalmente */
   padding: 5%;
   margin-top: 5%;
   margin-bottom: 15%;
@@ -228,8 +227,7 @@ form {
   flex-direction: column;
   gap: 20px;
   font-family: Arial, sans-serif;
-  border: 3px white solid;
-  background-color: rgba(255, 255, 255, 0.329);
+  background-color: rgba(255, 255, 255, 0.817);
   box-shadow: 15px 3px 20px #0004,
     -15px 0px 30px #0002;
 }
@@ -252,8 +250,8 @@ textarea {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.107);
+  border-radius: 20px;
   background: transparent;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
