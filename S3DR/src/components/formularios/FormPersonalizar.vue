@@ -92,117 +92,106 @@ const sendOrder = () => {
 
 <template>
   <section class="container">
-    <div class="content">
-      <div class="intro">
-        <h2>Personalizar pedido</h2>
-        <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
-        </p>
-      </div>
+    <h2>Personalizar pedido</h2>
+    <p> En este formulario, podrás <span> crear una pieza única </span> que se ajuste exactamente a tus necesidades.
+    </p>
+    <div class="form-container">
+      <form @submit.prevent="sendOrder">
+        <!-- Selección del producto -->
+        <label>Producto</label>
+        <select v-model="productoSeleccionado" @change="seleccionarProducto" required>
+          <option value="" disabled selected>Selecciona un producto</option>
+          <option v-for="producto in productos" :key="producto.id" :value="producto.nombre">
+            {{ producto.nombre }}
+          </option>
+          <option value="Otros">Otros...</option>
+        </select>
 
-      <div class="form-container">
-        <form @submit.prevent="sendOrder">
-          <legend>Datos del pedido</legend>
+        <!-- Mostrar campo para texto del código QR solo si el producto seleccionado es "Código QR" -->
+        <div v-if="productoSeleccionado === 'Código QR'">
+          <label>Texto para el Código QR</label>
+          <input type="text" v-model="textoQR" placeholder="Escribe lo que quieres en el QR" required />
+        </div>
 
-          <!-- Selección del producto -->
-          <label>Producto</label>
-          <select v-model="productoSeleccionado" @change="seleccionarProducto" required>
-            <option value="" disabled selected>Selecciona un producto</option>
-            <option v-for="producto in productos" :key="producto.id" :value="producto.nombre">
-              {{ producto.nombre }}
-            </option>
-            <option value="Otros">Otros...</option>
+        <!-- Mostrar campo adicional solo si el producto tiene un nombre adicional (por ejemplo, Llavero) -->
+        <div v-if="productoSeleccionado === 'Llavero nombre'">
+          <label>Nombre para el llavero</label>
+          <input type="text" v-model="objectName" placeholder="Escribe el nombre que deseas" required />
+        </div>
+
+        <!-- Campo de tamaño si no es "Otros" -->
+        <div v-if="productoSeleccionado !== 'Otros'">
+          <label>Tamaño</label>
+          <select v-model="tamanyo" required>
+            <option value="" disabled selected>Selecciona un tamaño</option>
+            <option value="Grande">Grande</option>
+            <option value="Mediano">Mediano</option>
+            <option value="Pequeño">Pequeño</option>
           </select>
+        </div>
 
-          <!-- Mostrar campo para texto del código QR solo si el producto seleccionado es "Código QR" -->
-          <div v-if="productoSeleccionado === 'Código QR'">
-            <label>Texto para el Código QR</label>
-            <input type="text" v-model="textoQR" placeholder="Escribe lo que quieres en el QR" required />
-          </div>
+        <!-- Dimensiones si el producto es "Otros" -->
+        <div v-if="productoSeleccionado === 'Otros'">
+          <label>Nombre del producto</label>
+          <input type="text" v-model="nombre" placeholder="Nombre" required />
+          <label>Altura</label>
+          <input type="number" min="0" v-model="altura" placeholder="Cm" required />
+          <label>Anchura</label>
+          <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
+          <label>Profundidad</label>
+          <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
+        </div>
 
-          <!-- Mostrar campo adicional solo si el producto tiene un nombre adicional (por ejemplo, Llavero) -->
-          <div v-if="productoSeleccionado === 'Llavero nombre'">
-            <label>Nombre para el llavero</label>
-            <input type="text" v-model="objectName" placeholder="Escribe el nombre que deseas" required />
-          </div>
+        <!-- Material -->
+        <label>Material</label>
+        <select v-model="material" required>
+          <option value="" disabled selected>Selecciona un material</option>
+          <option value="PLA">PLA</option>
+          <option value="PETG">PETG</option>
+          <option value="TPU">TPU (Flexible)</option>
+        </select>
 
-          <!-- Campo de tamaño si no es "Otros" -->
-          <div v-if="productoSeleccionado !== 'Otros'">
-            <label>Tamaño</label>
-            <select v-model="tamanyo" required>
-              <option value="" disabled selected>Selecciona un tamaño</option>
-              <option value="Grande">Grande</option>
-              <option value="Mediano">Mediano</option>
-              <option value="Pequeño">Pequeño</option>
-            </select>
-          </div>
+        <!-- Color -->
+        <label>Color</label>
+        <select v-model="color" required>
+          <option value="" disabled selected>Selecciona un color</option>
+          <option value="Negro">Negro</option>
+          <option value="Rojo">Rojo</option>
+          <option value="Dorado">Dorado</option>
+          <option value="Blanco">Blanco</option>
+          <option value="Amarillo">Amarillo</option>
+          <option value="Marron">Marron</option>
+          <option value="Gris">Gris plata</option>
+          <option value="Morado">Morado</option>
+          <option value="Cobre">Cobre</option>
+        </select>
 
-          <!-- Dimensiones si el producto es "Otros" -->
-          <div v-if="productoSeleccionado === 'Otros'">
-            <label>Nombre del producto</label>
-            <input type="text" v-model="nombre" placeholder="Nombre" required />
-            <label>Altura</label>
-            <input type="number" min="0" v-model="altura" placeholder="Cm" required />
-            <label>Anchura</label>
-            <input type="number" min="0" v-model="anchura" placeholder="Cm" required />
-            <label>Profundidad</label>
-            <input type="number" min="0" v-model="profundidad" placeholder="Cm" required />
-          </div>
+        <!-- Comentarios adicionales -->
+        <label>Comentarios adicionales</label>
+        <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
 
-          <!-- Material -->
-          <label>Material</label>
-          <select v-model="material" required>
-            <option value="" disabled selected>Selecciona un material</option>
-            <option value="PLA">PLA</option>
-            <option value="PETG">PETG</option>
-            <option value="TPU">TPU (Flexible)</option>
-          </select>
-
-          <!-- Color -->
-          <label>Color</label>
-          <select v-model="color" required>
-            <option value="" disabled selected>Selecciona un color</option>
-            <option value="Negro">Negro</option>
-            <option value="Rojo">Rojo</option>
-            <option value="Dorado">Dorado</option>
-            <option value="Blanco">Blanco</option>
-            <option value="Amarillo">Amarillo</option>
-            <option value="Marron">Marron</option>
-            <option value="Gris">Gris plata</option>
-            <option value="Morado">Morado</option>
-            <option value="Cobre">Cobre</option>
-          </select>
-
-          <!-- Comentarios adicionales -->
-          <label>Comentarios adicionales</label>
-          <textarea v-model="comments" placeholder="Descripción adicional"></textarea>
-
-          <!-- Botón para confirmar el pedido -->
-          <button type="submit">Confirmar Pedido</button>
-        </form>
-      </div>
+        <!-- Botón para confirmar el pedido -->
+        <button type="submit">Confirmar Pedido</button>
+      </form>
     </div>
   </section>
 </template>
 
 
 <style scoped>
-.content {
-  display: flex;
-  justify-content: center;
-  padding: 5%;
-  margin-top: 5%;
-  margin-bottom: 15%;
+.container{
+  margin: 2%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  border-radius: 10px;
 }
 
 h2 {
-  font-size: 200%;
-  color: rgb(138, 45, 45);
-  text-transform: uppercase;
-  font-style: italic;
-  text-align: left;
-  margin-left: 10%;
-  margin-right: 8%;
-  margin-bottom: -4%;
+    font-size: 300%;
+    color: rgb(77, 77, 77);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: -5%;
 }
 
 .span-text {
@@ -210,37 +199,33 @@ h2 {
   color: rgb(138, 45, 45);
 }
 
-h3 {
-  font-size: 150%;
-  text-transform: uppercase;
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 /* Estilos generales */
 form {
-  width: 100%;
-  padding: 30px 25px;
+  width: 30%;
+  padding: 3%;
   margin: 0 auto;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   font-family: Arial, sans-serif;
-  background-color: rgba(255, 255, 255, 0.817);
+  background-color: rgb(172, 11, 11);
   box-shadow: 15px 3px 20px #0004,
     -15px 0px 30px #0002;
+    margin-top: 4%;
 }
 
-.form-container{
-  width: 55%;
-  margin-right: 15%;
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilo para etiquetas */
 label {
   font-size: 1rem;
   font-weight: 550;
+  color: white;
 }
 
 /* Estilo para inputs y select */
@@ -250,7 +235,7 @@ textarea {
   width: 100%;
   padding: 10px;
   font-size: 1rem;
-  border: 2px solid rgba(0, 0, 0, 0.107);
+  border: 2px solid rgba(255, 255, 255, 0.674);
   border-radius: 20px;
   background: transparent;
   outline: none;
@@ -277,43 +262,29 @@ button {
   width: 100%;
   padding: 12px 20px;
   font-size: 1rem;
-  background-color: rgb(97, 33, 33);
+  background-color: rgba(0, 0, 0, 0.219);
   color: white;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 button:hover {
-  background-color: rgb(138, 45, 45);
+  background-color: rgba(0, 0, 0, 0.438);
 }
 
 textarea::placeholder,
 input::placeholder {
   font-weight: 300;
-  font-style: italic;
   font-size: 85%;
-}
-
-legend {
-  color: rgba(255, 255, 255, 0.991);
-  margin-left: 10px;
-  padding: 15px;
-  font-size: 1.2rem;
-  background-color: rgb(97, 33, 33);
-  border-radius: 50px;
-  box-shadow: 3px 0px 7px #0003;
-  position: relative;
-  text-transform: uppercase;
-  top: -55px;
-  text-align: center;
-  font-weight: 600;
+  color: white;
 }
 
 p {
-  width: 50%;
+  width: 100%;
   text-align: center;
   font-size: 120%;
   color: rgb(83, 83, 83);
@@ -321,19 +292,21 @@ p {
 }
 
 span {
-  color: rgb(138, 45, 45);
+  color: rgb(0, 0, 0);
   font-weight: bold;
 }
 
-.intro{
+.intro {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  align-items: left;
   width: 100%;
+  text-align: left;
 }
 
-.intro p{
+.intro p {
   width: 80%;
+  text-align: left;
 }
 </style>

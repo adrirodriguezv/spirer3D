@@ -3,13 +3,13 @@
     <nav>
       <!-- Icono de hamburguesa / cruz -->
       <div class="hamburger" @click="toggleMenu">
-        <div :class="{'line': true, 'open': menuOpen}"></div>
-        <div :class="{'line': true, 'open': menuOpen}"></div>
-        <div :class="{'line': true, 'open': menuOpen}"></div>
+        <div :class="{ 'line': true, 'open': menuOpen }"></div>
+        <div :class="{ 'line': true, 'open': menuOpen }"></div>
+        <div :class="{ 'line': true, 'open': menuOpen }"></div>
       </div>
 
       <!-- Menú desplegable -->
-      <ul :class="{'active': menuOpen}">
+      <ul :class="{ 'active': menuOpen }">
         <li>
           <router-link to="/">Inicio</router-link>
         </li>
@@ -22,27 +22,29 @@
         <li>
           <router-link to="/contacto">Contacto</router-link>
         </li>
-        
+
+
         <!-- Solo muestra el enlace de admin si el usuario está autenticado y es admin -->
         <template v-if="isAuthenticated && userType === 'admin'">
           <li>
             <router-link to="/admin">Admin</router-link>
           </li>
         </template>
-      </ul>
 
-      <ul class="cliente-container">
+        <div class="linea-horizontal"></div>
+
         <div class="cliente">
           <!-- Mostrar icono de usuario o enlace a login si no está autenticado -->
-          <router-link v-if="!isAuthenticated" to="/login">
-            <img src="../assets/img/usuario.png" class="perfil-img" />
+          <router-link v-if="!isAuthenticated" :to="`/login`">
+            <button class="button-logout">Iniciar Sesión</button>
           </router-link>
 
           <!-- Mostrar botón de cerrar sesión si está autenticado -->
           <template v-if="isAuthenticated">
-            <button @click="logout">Cerrar sesión</button>
+            <button @click="logout" class="button-logout">Cerrar sesión</button>
           </template>
         </div>
+
       </ul>
     </nav>
   </header>
@@ -131,7 +133,7 @@ nav {
 .hamburger .line {
   height: 1px;
   width: 30px;
-  background-color: #000;
+  background-color: white;
   border-radius: 5px;
   transition: all 0.3s ease;
 }
@@ -180,11 +182,27 @@ ul a {
   font-weight: 500;
 }
 
+.linea-horizontal {
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.521);
+  height: 0.5px;
+}
+
+.button-logout{
+  width: 120%;
+  padding: 10%;
+  background-color: transparent;
+  color: white;
+  border: 2px white solid;
+  border-radius: 15px;
+}
+
 /* Animación de apertura */
 @keyframes slideIn {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -193,7 +211,8 @@ ul a {
 /* Hacer el menú invisible cuando no está abierto */
 ul {
   display: none;
-  position: absolute; /* Establecerlo como absoluto para que ocupe toda la pantalla */
+  position: absolute;
+  /* Establecerlo como absoluto para que ocupe toda la pantalla */
   top: 0;
   left: 0;
 }
