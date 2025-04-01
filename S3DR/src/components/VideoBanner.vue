@@ -9,7 +9,7 @@
         </p>
         <RouterLink :to="`/personalizar`"><button>Empezar personalización</button></RouterLink>
       </div>
-      <!--<video ref="video" src="../assets/video/clipBambuLab.mp4" autoplay loop muted></video>-->
+      <video ref="video" src="../assets/video/clipBambuLab.mp4" autoplay loop muted></video>
     </section>
   </template>
   
